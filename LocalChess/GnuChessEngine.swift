@@ -130,6 +130,13 @@ private enum PST {
     }
 }
 
+/// Engine verdict for one position (side-to-move perspective).
+struct EngineEval {
+    let bestUci: String
+    let scoreCp: Int
+    let mateIn: Int?
+}
+
 // MARK: - Built-in search
 
 /// Negamax alpha-beta search with MVV-LVA ordering and a captures-only
@@ -263,6 +270,36 @@ final class ArasanAdapter {
         Task.detached(priority: .utility) {
             if bridge.started() { bridge.sendNewGame() }
         }
+    }
+
+    // MARK: Post-game review
+
+    /// One engine verdict per position: best move + side-to-move score.
+    /// `moves` is the full game; returns an entry per prefix position
+    /// (empty prefix first), nil where the engine had nothing to say.
+    func reviewEvals(moves: [String], movetimeMs: Int,
+                     progress: @escaping (Double) -> Void) async -> [EngineEval?] {
+        var out: [EngineEval?] = []
+        let total = max(1, moves.count + 1)
+        for i in 0...moves.count {
+            if Task.isCancelled { break }
+            let prefix = Array(moves.prefix(i))
+            out.append(await singleEval(prefix: prefix, movetimeMs: movetimeMs))
+            progress(Double(i + 1) / Double(total))
+        }
+        return out
+    }
+
+    private func singleEval(prefix: [String], movetimeMs: Int) async -> EngineEval? {
+        await Task.detached(priority: .userInitiated) { [bridge] in
+            guard bridge.start() else { return nil }
+            guard let d = bridge.bestMoveAndScore(withMoves: prefix,
+                                                  movetimeMs: movetimeMs) as? [String: Any],
+                  let uci = d["move"] as? String,
+                  let score = (d["score"] as? NSNumber)?.intValue else { return nil }
+            let mate = (d["mate"] as? NSNumber)?.intValue
+            return EngineEval(bestUci: uci, scoreCp: score, mateIn: mate)
+        }.value
     }
 
     // MARK: UCI over the bridge (always off the main thread)

@@ -150,6 +150,45 @@ final class LocalChessUITests: XCTestCase {
         XCTAssertTrue(el(app, "coach-yeti-thinking").waitForExistence(timeout: 20))
     }
 
+    /// Post-game review: Fool's mate in local 2-player mode (1.f3 e5 2.g4
+    /// Qh4#), then REVIEW GAME grades the moves — g4 must be flagged a
+    /// blunder and the replay stepper must scrub the game.
+    func testReviewGradesBlunders() throws {
+        let app = XCUIApplication()
+        app.launch()
+        XCTAssertTrue(el(app, "sq-e2").waitForExistence(timeout: 20))
+
+        el(app, "menu").tap()
+        let toggle = el(app, "vsEngineToggle")
+        XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+        toggle.tap()
+        Thread.sleep(forTimeInterval: 0.5)
+        let toggleValue = toggle.value as? String
+        if toggleValue != "0" && toggleValue != "false" {
+            toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.92, dy: 0.5)).tap()
+            Thread.sleep(forTimeInterval: 0.5)
+        }
+        el(app, "startGame").tap()
+        XCTAssertTrue(app.staticTexts["2 players · local"].waitForExistence(timeout: 5))
+
+        for (from, to) in [("sq-f2", "sq-f3"), ("sq-e7", "sq-e5"),
+                           ("sq-g2", "sq-g4"), ("sq-d8", "sq-h4")] {
+            el(app, from).tap()
+            Thread.sleep(forTimeInterval: 0.2)
+            el(app, to).tap()
+            Thread.sleep(forTimeInterval: 0.3)
+        }
+
+        el(app, "reviewGameButton").tap()
+        // Engine grades ~5 positions at 400ms each; allow a wide margin.
+        XCTAssertTrue(el(app, "yeti-score").waitForExistence(timeout: 120))
+        // g4 (ply 2) hangs mate in one: must wear the blunder badge.
+        XCTAssertTrue(el(app, "tier-Blunder-2").waitForExistence(timeout: 10))
+        // Scrub to the final position and back via the stepper.
+        el(app, "review-move-3").tap()
+        XCTAssertTrue(app.staticTexts["4 / 4"].waitForExistence(timeout: 5))
+    }
+
     /// Playing as Black rotates the board 180 degrees: Black's home rank
     /// renders at the bottom. The old mirror bug kept White at the bottom,
     /// which these frame + tap assertions catch.

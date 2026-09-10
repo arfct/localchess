@@ -8,6 +8,7 @@ struct ContentView: View {
     @EnvironmentObject var game: GameState
     @State private var showMenu = false
     @State private var showConfetti = false
+    @State private var showReview = false
     @State private var shareImage: UIImage?
 
     var body: some View {
@@ -40,11 +41,17 @@ struct ContentView: View {
                             showConfetti = false
                         }
                     },
+                    onReview: {
+                        NSLog("[LocalChess] review sheet requested")
+                        game.showMateModal = false
+                        showReview = true
+                    },
                     onContinue: { game.showMateModal = false }
                 )
             }
         }
         .sheet(isPresented: $showMenu) { MenuSheet(game: game) }
+        .fullScreenCover(isPresented: $showReview) { ReviewView(game: game) }
         .sheet(isPresented: promotionBinding) { PromotionSheet(game: game) }
         .sheet(item: $shareImage) { img in ShareSheet(image: img) }
         .onChange(of: game.showMateModal) { visible in
@@ -539,6 +546,7 @@ struct PromotionSheet: View {
 struct MateModal: View {
     @ObservedObject var game: GameState
     let onShowOff: () -> Void
+    let onReview: () -> Void
     let onContinue: () -> Void
 
     var body: some View {
@@ -583,6 +591,16 @@ struct MateModal: View {
                             .padding(.vertical, 14)
                             .background(RoundedRectangle(cornerRadius: 14)
                                 .fill(BoardTheme.neonGreen))
+                    }
+                    Button(action: onReview) {
+                        Text("REVIEW GAME")
+                            .accessibilityIdentifier("reviewGameButton")
+                            .font(.system(size: 17, weight: .black, design: .rounded))
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(RoundedRectangle(cornerRadius: 14)
+                                .fill(Color.white.opacity(0.12)))
                     }
                     Button(action: onContinue) {
                         Text("CONTINUE")

@@ -26,6 +26,10 @@ final class GameState: ObservableObject {
     @Published var pendingPromotion: ChessMove? = nil
     @Published var lastCaptureWasQueen = false
     @Published var moveCount = 0
+    // Post-game review (engine-graded moves + replay).
+    @Published var review: GameReview? = nil
+    @Published var reviewing = false
+    @Published var reviewProgress = 0.0
 
     /// When false, both sides are human (local 2-player).
     @Published var vsEngine = true
@@ -42,6 +46,7 @@ final class GameState: ObservableObject {
     private var redoUci: [String] = []
     private var timer: AnyCancellable?
     private var engineTask: Task<Void, Never>?
+    private var reviewTask: Task<Void, Never>?
 
     var playerColor: PieceColor { playerSide == .white ? .white : .black }
     var isGameOver: Bool {
@@ -60,6 +65,7 @@ final class GameState: ObservableObject {
 
     func newGame(as side: PlayerSide, vsEngine: Bool = true, difficulty: EngineDifficulty? = nil) {
         engineTask?.cancel()
+        clearReview()
         board = ChessBoard()
         history = []
         redoStack = []
@@ -251,6 +257,56 @@ final class GameState: ObservableObject {
         }
     }
 
+    // MARK: - Post-game review
+
+    /// Drop any review state (positions changed or new game).
+    func clearReview() {
+        reviewTask?.cancel()
+        reviewTask = nil
+        reviewing = false
+        reviewProgress = 0
+        review = nil
+    }
+
+    func cancelReview() {
+        reviewTask?.cancel()
+        reviewTask = nil
+        reviewing = false
+    }
+
+    /// Grade every move with the engine (background, ~0.4s per position).
+    /// Cached: reopening a finished review does not re-analyze.
+    func startReview() {
+        if review != nil || reviewing { return }
+        guard isGameOver else { return }
+        reviewing = true
+        reviewProgress = 0
+        review = nil
+        let moves = uciMoves
+        let final = status
+        let human: PieceColor? = vsEngine ? playerColor : nil
+        reviewTask?.cancel()
+        NSLog("[LocalChess] review started (%d moves)", moves.count)
+        reviewTask = Task { [weak self] in
+            let evals = await ArasanAdapter.shared.reviewEvals(
+                moves: moves, movetimeMs: 400
+            ) { [weak self] p in
+                Task { @MainActor in self?.reviewProgress = p }
+            }
+            NSLog("[LocalChess] review evals done (%d)", evals.count)
+            guard !Task.isCancelled else { return }
+            let built = GameReview.build(moves: moves, evals: evals,
+                                         final: final, human: human)
+            NSLog("[LocalChess] review built (%d graded)", built.moves.count)
+            await MainActor.run { [weak self] in
+                guard let self else { return }
+                self.review = built
+                self.reviewing = false
+                HapticManager.shared.checkmate(playerWon: true)
+            }
+        }
+    }
+
     // MARK: - Undo / redo
 
     var canUndo: Bool { !history.isEmpty && !engineThinking }
@@ -259,6 +315,7 @@ final class GameState: ObservableObject {
     func undo() {
         guard canUndo else { return }
         engineTask?.cancel()
+        clearReview()
         engineThinking = false
         // Against the engine, revert a full round (engine + player) when possible.
         let steps = (vsEngine && history.count >= 2 && board.turn == playerColor) ? 2 : 1
@@ -281,6 +338,7 @@ final class GameState: ObservableObject {
 
     func redo() {
         guard canRedo else { return }
+        clearReview()
         let steps = (vsEngine && redoStack.count >= 2) ? 2 : 1
         for _ in 0..<steps {
             guard let next = redoStack.popLast(), let rp = redoPoints.popLast() else { break }

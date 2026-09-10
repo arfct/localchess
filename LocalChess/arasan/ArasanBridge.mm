@@ -204,4 +204,65 @@ static BOOL SpawnEngineThread(pthread_t *thread) {
     }
 }
 
+/// Score line parser: last "score cp N" / "score mate N" without a bound.
+- (void)noteScoreLine:(NSString *)line score:(int *)score mate:(int *)mate {
+    NSRange r = [line rangeOfString:@" score "];
+    if (r.location == NSNotFound) return;
+    NSString *tail = [line substringFromIndex:r.location + r.length];
+    if ([tail containsString:@"bound"]) return; // upperbound/lowerbound: skip
+    if ([tail hasPrefix:@"cp "]) {
+        *score = (int)[[tail substringFromIndex:3] integerValue];
+        *mate = 0;
+    } else if ([tail hasPrefix:@"mate "]) {
+        int m = (int)[[tail substringFromIndex:5] integerValue];
+        *mate = m;
+        // Mate distance to centipawns (side to move); keeps ordering sane.
+        *score = (m > 0 ? 100000 - m : -100000 - m);
+    }
+}
+
+- (nullable NSDictionary *)bestMoveAndScoreWithMoves:(NSArray<NSString *> *)moves
+                                          movetimeMs:(NSInteger)ms {
+    [_lock lock];
+    @try {
+        if (!_started) return nil;
+        NSString *position = @"position startpos";
+        if (moves.count > 0) {
+            position = [position stringByAppendingFormat:@" moves %@",
+                        [moves componentsJoinedByString:@" "]];
+        }
+        if (![self writeLine:position]) return nil;
+        NSString *go = [NSString stringWithFormat:@"go movetime %ld", (long)ms];
+        if (![self writeLine:go]) return nil;
+        NSTimeInterval deadline = [NSDate timeIntervalSinceReferenceDate] + (ms / 1000.0) + 30.0;
+        int score = 0, mate = 0;
+        BOOL sawScore = NO;
+        for (;;) {
+            NSTimeInterval left = deadline - [NSDate timeIntervalSinceReferenceDate];
+            if (left <= 0) return nil;
+            NSString *line = [self readLineWithTimeout:left];
+            if (!line) return nil;
+            if ([line hasPrefix:@"bestmove"]) {
+                NSArray<NSString *> *parts = [line componentsSeparatedByString:@" "];
+                if (parts.count < 2 || [parts[1] isEqualToString:@"(none)"] ||
+                    [parts[1] isEqualToString:@"0000"]) return nil;
+                return @{@"move": parts[1],
+                         @"score": @(sawScore ? score : 0),
+                         @"mate": sawScore && mate != 0 ? @(mate) : [NSNull null]};
+            }
+            if ([line hasPrefix:@"info"]) {
+                int s = score, m = mate;
+                [self noteScoreLine:line score:&s mate:&m];
+                // Only adopt parses that actually matched a score token.
+                if (s != score || m != mate || [line containsString:@" score cp "] ||
+                    [line containsString:@" score mate "]) {
+                    score = s; mate = m; sawScore = YES;
+                }
+            }
+        }
+    } @finally {
+        [_lock unlock];
+    }
+}
+
 @end

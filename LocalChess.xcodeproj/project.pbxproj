@@ -52,7 +52,47 @@
 		A1B2C3D4E5F60231 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60271 /* util.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
 		A1B2C3D4E5F60232 /* value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60272 /* value.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
 		A1B2C3D4E5F60233 /* vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60273 /* vector.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
-		A1B2C3D4E5F60234 /* GnuChessBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60274 /* GnuChessBridge.mm */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A9B8C7D6E5F4000201 /* arasanx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4000101 /* arasanx.cpp */; settings = {COMPILER_FLAGS = "-Dmain=arasan_main"; }; };
+		A9B8C7D6E5F4000401 /* attacks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4000301 /* attacks.cpp */; };
+		A9B8C7D6E5F4000601 /* bench.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4000501 /* bench.cpp */; };
+		A9B8C7D6E5F4000801 /* bhash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4000701 /* bhash.cpp */; };
+		A9B8C7D6E5F4000A01 /* bitprobe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4000901 /* bitprobe.cpp */; };
+		A9B8C7D6E5F4000C01 /* bitutil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4000B01 /* bitutil.cpp */; };
+		A9B8C7D6E5F4000E01 /* board.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4000D01 /* board.cpp */; };
+		A9B8C7D6E5F4001001 /* boardio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4000F01 /* boardio.cpp */; };
+		A9B8C7D6E5F4001201 /* bookread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4001101 /* bookread.cpp */; };
+		A9B8C7D6E5F4001401 /* bookwrit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4001301 /* bookwrit.cpp */; };
+		A9B8C7D6E5F4001601 /* calctime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4001501 /* calctime.cpp */; };
+		A9B8C7D6E5F4001801 /* chess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4001701 /* chess.cpp */; };
+		A9B8C7D6E5F4001A01 /* chessio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4001901 /* chessio.cpp */; };
+		A9B8C7D6E5F4001C01 /* eco.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4001B01 /* eco.cpp */; };
+		A9B8C7D6E5F4001E01 /* epdrec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4001D01 /* epdrec.cpp */; };
+		A9B8C7D6E5F4002001 /* evaluate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4001F01 /* evaluate.cpp */; };
+		A9B8C7D6E5F4002201 /* globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4002101 /* globals.cpp */; settings = {COMPILER_FLAGS = "-include \"$(SRCROOT)/LocalChess/arasan/ios_compat/no_setrlimit.h\""; }; };
+		A9B8C7D6E5F4002401 /* hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4002301 /* hash.cpp */; };
+		A9B8C7D6E5F4002601 /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4002501 /* input.cpp */; };
+		A9B8C7D6E5F4002801 /* learn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4002701 /* learn.cpp */; };
+		A9B8C7D6E5F4002A01 /* legal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4002901 /* legal.cpp */; };
+		A9B8C7D6E5F4002C01 /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4002B01 /* material.cpp */; };
+		A9B8C7D6E5F4002E01 /* movearr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4002D01 /* movearr.cpp */; };
+		A9B8C7D6E5F4003001 /* movegen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4002F01 /* movegen.cpp */; };
+		A9B8C7D6E5F4003201 /* notation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4003101 /* notation.cpp */; };
+		A9B8C7D6E5F4003401 /* options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4003301 /* options.cpp */; };
+		A9B8C7D6E5F4003601 /* protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4003501 /* protocol.cpp */; };
+		A9B8C7D6E5F4003801 /* scoring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4003701 /* scoring.cpp */; };
+		A9B8C7D6E5F4003A01 /* search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4003901 /* search.cpp */; };
+		A9B8C7D6E5F4003C01 /* searchc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4003B01 /* searchc.cpp */; };
+		A9B8C7D6E5F4003E01 /* see.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4003D01 /* see.cpp */; };
+		A9B8C7D6E5F4004001 /* stats.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4003F01 /* stats.cpp */; };
+		A9B8C7D6E5F4004201 /* syzygy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4004101 /* syzygy.cpp */; };
+		A9B8C7D6E5F4004401 /* tester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4004301 /* tester.cpp */; };
+		A9B8C7D6E5F4004601 /* threadc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4004501 /* threadc.cpp */; };
+		A9B8C7D6E5F4004801 /* threadp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4004701 /* threadp.cpp */; };
+		A9B8C7D6E5F4004A01 /* tbprobe.c in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4004901 /* tbprobe.c */; settings = {COMPILER_FLAGS = "-x c++"; }; };
+		A9B8C7D6E5F4004C01 /* ArasanBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4004B01 /* ArasanBridge.mm */; };
+		A9B8C7D6E5F4004F01 /* arasanv8-20260906.nnue in Resources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4004E01 /* arasanv8-20260906.nnue */; };
+		A9B8C7D6E5F4FF0102 /* GameReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4FF0101 /* GameReview.swift */; };
+		A9B8C7D6E5F4FF0202 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B8C7D6E5F4FF0201 /* ReviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,42 +110,49 @@
 		A1B2C3D4E5F60102 /* LocalChessUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalChessUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B2C3D4E5F60108 /* LocalChessUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalChessUITests.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60113 /* BoardOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardOrientation.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F60241 /* attack.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/attack.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60242 /* board.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/board.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60243 /* book.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/book.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60244 /* eval.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/eval.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60245 /* fen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/fen.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60246 /* hash.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/hash.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60247 /* list.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/list.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60248 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/main.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60249 /* material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/material.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60250 /* move.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/move.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60251 /* move_check.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/move_check.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60252 /* move_do.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/move_do.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60253 /* move_evasion.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/move_evasion.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60254 /* move_gen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/move_gen.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60255 /* move_legal.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/move_legal.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60256 /* option.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/option.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60257 /* pawn.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/pawn.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60258 /* piece.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/piece.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60259 /* posix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/posix.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60260 /* protocol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/protocol.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60261 /* pst.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/pst.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60262 /* pv.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/pv.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60263 /* random.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/random.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60264 /* recog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/recog.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60265 /* search.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/search.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60266 /* search_full.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/search_full.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60267 /* see.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/see.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60268 /* sort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/sort.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60269 /* square.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/square.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60270 /* trans.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/trans.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60271 /* util.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/util.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60272 /* value.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/value.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60273 /* vector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/vector.cpp; sourceTree = "<group>"; };
-		A1B2C3D4E5F60274 /* GnuChessBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = gnuchess/GnuChessBridge.mm; sourceTree = "<group>"; };
-		A1B2C3D4E5F60276 /* GnuChessBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gnuchess/GnuChessBridge.h; sourceTree = "<group>"; };
 		A1B2C3D4E5F60275 /* LocalChess-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalChess-Bridging-Header.h; sourceTree = "<group>"; };
+		A9B8C7D6E5F4000101 /* arasanx.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/arasanx.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4000301 /* attacks.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/attacks.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4000501 /* bench.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/bench.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4000701 /* bhash.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/bhash.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4000901 /* bitprobe.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/bitprobe.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4000B01 /* bitutil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/bitutil.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4000D01 /* board.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/board.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4000F01 /* boardio.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/boardio.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4001101 /* bookread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/bookread.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4001301 /* bookwrit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/bookwrit.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4001501 /* calctime.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/calctime.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4001701 /* chess.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/chess.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4001901 /* chessio.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/chessio.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4001B01 /* eco.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/eco.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4001D01 /* epdrec.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/epdrec.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4001F01 /* evaluate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/evaluate.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4002101 /* globals.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/globals.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4002301 /* hash.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/hash.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4002501 /* input.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/input.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4002701 /* learn.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/learn.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4002901 /* legal.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/legal.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4002B01 /* material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/material.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4002D01 /* movearr.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/movearr.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4002F01 /* movegen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/movegen.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4003101 /* notation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/notation.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4003301 /* options.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/options.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4003501 /* protocol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/protocol.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4003701 /* scoring.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/scoring.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4003901 /* search.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/search.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4003B01 /* searchc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/searchc.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4003D01 /* see.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/see.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4003F01 /* stats.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/stats.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4004101 /* syzygy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/syzygy.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4004301 /* tester.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/tester.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4004501 /* threadc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/threadc.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4004701 /* threadp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = arasan/engine/threadp.cpp; sourceTree = "<group>"; };
+		A9B8C7D6E5F4004901 /* tbprobe.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = arasan/engine/syzygy/src/tbprobe.c; sourceTree = "<group>"; };
+		A9B8C7D6E5F4004B01 /* ArasanBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = arasan/ArasanBridge.mm; sourceTree = "<group>"; };
+		A9B8C7D6E5F4004D01 /* ArasanBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = arasan/ArasanBridge.h; sourceTree = "<group>"; };
+		A9B8C7D6E5F4004E01 /* arasanv8-20260906.nnue */ = {isa = PBXFileReference; lastKnownFileType = file; path = arasan/arasanv8-20260906.nnue; sourceTree = "<group>"; };
+		A9B8C7D6E5F4FF0101 /* GameReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameReview.swift; sourceTree = "<group>"; };
+		A9B8C7D6E5F4FF0201 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +196,8 @@
 				A1B2C3D4E5F60016 /* ChessCore.swift */,
 				A1B2C3D4E5F60017 /* GnuChessEngine.swift */,
 				A1B2C3D4E5F60018 /* Haptics.swift */,
+				A9B8C7D6E5F4FF0101 /* GameReview.swift */,
+				A9B8C7D6E5F4FF0201 /* ReviewView.swift */,
 				A1B2C3D4E5F60113 /* BoardOrientation.swift */,
 				A1B2C3D4E5F60241 /* attack.cpp */,
 				A1B2C3D4E5F60242 /* board.cpp */,
@@ -183,8 +232,46 @@
 				A1B2C3D4E5F60271 /* util.cpp */,
 				A1B2C3D4E5F60272 /* value.cpp */,
 				A1B2C3D4E5F60273 /* vector.cpp */,
-				A1B2C3D4E5F60274 /* GnuChessBridge.mm */,
-				A1B2C3D4E5F60276 /* GnuChessBridge.h */,
+				A9B8C7D6E5F4000101 /* arasanx.cpp */,
+				A9B8C7D6E5F4000301 /* attacks.cpp */,
+				A9B8C7D6E5F4000501 /* bench.cpp */,
+				A9B8C7D6E5F4000701 /* bhash.cpp */,
+				A9B8C7D6E5F4000901 /* bitprobe.cpp */,
+				A9B8C7D6E5F4000B01 /* bitutil.cpp */,
+				A9B8C7D6E5F4000D01 /* board.cpp */,
+				A9B8C7D6E5F4000F01 /* boardio.cpp */,
+				A9B8C7D6E5F4001101 /* bookread.cpp */,
+				A9B8C7D6E5F4001301 /* bookwrit.cpp */,
+				A9B8C7D6E5F4001501 /* calctime.cpp */,
+				A9B8C7D6E5F4001701 /* chess.cpp */,
+				A9B8C7D6E5F4001901 /* chessio.cpp */,
+				A9B8C7D6E5F4001B01 /* eco.cpp */,
+				A9B8C7D6E5F4001D01 /* epdrec.cpp */,
+				A9B8C7D6E5F4001F01 /* evaluate.cpp */,
+				A9B8C7D6E5F4002101 /* globals.cpp */,
+				A9B8C7D6E5F4002301 /* hash.cpp */,
+				A9B8C7D6E5F4002501 /* input.cpp */,
+				A9B8C7D6E5F4002701 /* learn.cpp */,
+				A9B8C7D6E5F4002901 /* legal.cpp */,
+				A9B8C7D6E5F4002B01 /* material.cpp */,
+				A9B8C7D6E5F4002D01 /* movearr.cpp */,
+				A9B8C7D6E5F4002F01 /* movegen.cpp */,
+				A9B8C7D6E5F4003101 /* notation.cpp */,
+				A9B8C7D6E5F4003301 /* options.cpp */,
+				A9B8C7D6E5F4003501 /* protocol.cpp */,
+				A9B8C7D6E5F4003701 /* scoring.cpp */,
+				A9B8C7D6E5F4003901 /* search.cpp */,
+				A9B8C7D6E5F4003B01 /* searchc.cpp */,
+				A9B8C7D6E5F4003D01 /* see.cpp */,
+				A9B8C7D6E5F4003F01 /* stats.cpp */,
+				A9B8C7D6E5F4004101 /* syzygy.cpp */,
+				A9B8C7D6E5F4004301 /* tester.cpp */,
+				A9B8C7D6E5F4004501 /* threadc.cpp */,
+				A9B8C7D6E5F4004701 /* threadp.cpp */,
+				A9B8C7D6E5F4004901 /* tbprobe.c */,
+				A9B8C7D6E5F4004B01 /* ArasanBridge.mm */,
+				A9B8C7D6E5F4004D01 /* ArasanBridge.h */,
+				A9B8C7D6E5F4004E01 /* arasanv8-20260906.nnue */,
 				A1B2C3D4E5F60275 /* LocalChess-Bridging-Header.h */,
 				A1B2C3D4E5F60019 /* Assets.xcassets */,
 			);
@@ -287,6 +374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1B2C3D4E5F60029 /* Assets.xcassets in Resources */,
+				A9B8C7D6E5F4004F01 /* arasanv8-20260906.nnue in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,7 +394,47 @@
 				A1B2C3D4E5F60026 /* ChessCore.swift in Sources */,
 				A1B2C3D4E5F60027 /* GnuChessEngine.swift in Sources */,
 				A1B2C3D4E5F60028 /* Haptics.swift in Sources */,
+				A9B8C7D6E5F4FF0102 /* GameReview.swift in Sources */,
+				A9B8C7D6E5F4FF0202 /* ReviewView.swift in Sources */,
 				A1B2C3D4E5F60112 /* BoardOrientation.swift in Sources */,
+				A9B8C7D6E5F4000201 /* arasanx.cpp in Sources */,
+				A9B8C7D6E5F4000401 /* attacks.cpp in Sources */,
+				A9B8C7D6E5F4000601 /* bench.cpp in Sources */,
+				A9B8C7D6E5F4000801 /* bhash.cpp in Sources */,
+				A9B8C7D6E5F4000A01 /* bitprobe.cpp in Sources */,
+				A9B8C7D6E5F4000C01 /* bitutil.cpp in Sources */,
+				A9B8C7D6E5F4000E01 /* board.cpp in Sources */,
+				A9B8C7D6E5F4001001 /* boardio.cpp in Sources */,
+				A9B8C7D6E5F4001201 /* bookread.cpp in Sources */,
+				A9B8C7D6E5F4001401 /* bookwrit.cpp in Sources */,
+				A9B8C7D6E5F4001601 /* calctime.cpp in Sources */,
+				A9B8C7D6E5F4001801 /* chess.cpp in Sources */,
+				A9B8C7D6E5F4001A01 /* chessio.cpp in Sources */,
+				A9B8C7D6E5F4001C01 /* eco.cpp in Sources */,
+				A9B8C7D6E5F4001E01 /* epdrec.cpp in Sources */,
+				A9B8C7D6E5F4002001 /* evaluate.cpp in Sources */,
+				A9B8C7D6E5F4002201 /* globals.cpp in Sources */,
+				A9B8C7D6E5F4002401 /* hash.cpp in Sources */,
+				A9B8C7D6E5F4002601 /* input.cpp in Sources */,
+				A9B8C7D6E5F4002801 /* learn.cpp in Sources */,
+				A9B8C7D6E5F4002A01 /* legal.cpp in Sources */,
+				A9B8C7D6E5F4002C01 /* material.cpp in Sources */,
+				A9B8C7D6E5F4002E01 /* movearr.cpp in Sources */,
+				A9B8C7D6E5F4003001 /* movegen.cpp in Sources */,
+				A9B8C7D6E5F4003201 /* notation.cpp in Sources */,
+				A9B8C7D6E5F4003401 /* options.cpp in Sources */,
+				A9B8C7D6E5F4003601 /* protocol.cpp in Sources */,
+				A9B8C7D6E5F4003801 /* scoring.cpp in Sources */,
+				A9B8C7D6E5F4003A01 /* search.cpp in Sources */,
+				A9B8C7D6E5F4003C01 /* searchc.cpp in Sources */,
+				A9B8C7D6E5F4003E01 /* see.cpp in Sources */,
+				A9B8C7D6E5F4004001 /* stats.cpp in Sources */,
+				A9B8C7D6E5F4004201 /* syzygy.cpp in Sources */,
+				A9B8C7D6E5F4004401 /* tester.cpp in Sources */,
+				A9B8C7D6E5F4004601 /* threadc.cpp in Sources */,
+				A9B8C7D6E5F4004801 /* threadp.cpp in Sources */,
+				A9B8C7D6E5F4004A01 /* tbprobe.c in Sources */,
+				A9B8C7D6E5F4004C01 /* ArasanBridge.mm in Sources */,
 				A1B2C3D4E5F60201 /* attack.cpp in Sources */,
 				A1B2C3D4E5F60202 /* board.cpp in Sources */,
 				A1B2C3D4E5F60203 /* book.cpp in Sources */,
@@ -340,7 +468,6 @@
 				A1B2C3D4E5F60231 /* util.cpp in Sources */,
 				A1B2C3D4E5F60232 /* value.cpp in Sources */,
 				A1B2C3D4E5F60233 /* vector.cpp in Sources */,
-				A1B2C3D4E5F60234 /* GnuChessBridge.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,13 +551,21 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ai.sdsa.localchess.app;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/LocalChess/gnuchess";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/LocalChess/arasan",
+					"$(SRCROOT)/LocalChess/arasan/ios_compat",
+					"$(SRCROOT)/LocalChess/arasan/engine",
+					"$(SRCROOT)/LocalChess/arasan/engine/nnue",
+				);
+				OTHER_CPLUSPLUSFLAGS = "-D_MAC -DSIMD -DNEON -DNETWORK=arasanv8-20260906.nnue -DARASAN_VERSION=26.0 -DSYZYGY_TBS";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/LocalChess/LocalChess-Bridging-Header.h";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				CLANG_COVERAGE_MAPPING = NO;
+				ENABLE_CODE_COVERAGE = NO;
 			};
 			name = Debug;
 		};
@@ -455,13 +590,21 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ai.sdsa.localchess.app;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/LocalChess/gnuchess";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/LocalChess/arasan",
+					"$(SRCROOT)/LocalChess/arasan/ios_compat",
+					"$(SRCROOT)/LocalChess/arasan/engine",
+					"$(SRCROOT)/LocalChess/arasan/engine/nnue",
+				);
+				OTHER_CPLUSPLUSFLAGS = "-D_MAC -DSIMD -DNEON -DNETWORK=arasanv8-20260906.nnue -DARASAN_VERSION=26.0 -DSYZYGY_TBS";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/LocalChess/LocalChess-Bridging-Header.h";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				CLANG_COVERAGE_MAPPING = NO;
+				ENABLE_CODE_COVERAGE = NO;
 			};
 			name = Release;
 		};
@@ -483,6 +626,8 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				CLANG_COVERAGE_MAPPING = NO;
+				ENABLE_CODE_COVERAGE = NO;
 				TEST_TARGET_NAME = LocalChess;
 			};
 			name = Debug;
@@ -505,6 +650,8 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				CLANG_COVERAGE_MAPPING = NO;
+				ENABLE_CODE_COVERAGE = NO;
 				TEST_TARGET_NAME = LocalChess;
 			};
 			name = Release;

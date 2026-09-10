@@ -29,6 +29,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// for full strength.
 - (void)configureStrengthWithElo:(NSInteger)elo limited:(BOOL)limited;
 
+/// Like bestMoveWithMoves, but also returns the engine's evaluation.
+/// Result: @{@"move": NSString, @"score": NSNumber (centipawns, side to
+/// move), @"mate": NSNumber-or-NSNull (mate distance, side to move)}.
+/// Nil on timeout/failure.
+- (nullable NSDictionary *)bestMoveAndScoreWithMoves:(NSArray<NSString *> *)moves
+                                          movetimeMs:(NSInteger)ms;
+
 /// Sends "ucinewgame" (clears the transposition table). No reply expected.
 - (void)sendNewGame;
 
