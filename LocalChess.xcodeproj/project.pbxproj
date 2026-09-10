@@ -1,0 +1,545 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A1B2C3D4E5F60020 /* LocalChessApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60010 /* LocalChessApp.swift */; };
+		A1B2C3D4E5F60021 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60011 /* ContentView.swift */; };
+		A1B2C3D4E5F60022 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60012 /* BoardView.swift */; };
+		A1B2C3D4E5F60023 /* PieceArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60013 /* PieceArt.swift */; };
+		A1B2C3D4E5F60024 /* CoachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60014 /* CoachView.swift */; };
+		A1B2C3D4E5F60025 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60015 /* GameState.swift */; };
+		A1B2C3D4E5F60026 /* ChessCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60016 /* ChessCore.swift */; };
+		A1B2C3D4E5F60027 /* GnuChessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60017 /* GnuChessEngine.swift */; };
+		A1B2C3D4E5F60028 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60018 /* Haptics.swift */; };
+		A1B2C3D4E5F60029 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60019 /* Assets.xcassets */; };
+		A1B2C3D4E5F60107 /* LocalChessUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60108 /* LocalChessUITests.swift */; };
+		A1B2C3D4E5F60112 /* BoardOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60113 /* BoardOrientation.swift */; };
+		A1B2C3D4E5F60201 /* attack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60241 /* attack.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60202 /* board.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60242 /* board.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60203 /* book.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60243 /* book.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60204 /* eval.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60244 /* eval.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60205 /* fen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60245 /* fen.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60206 /* hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60246 /* hash.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60207 /* list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60247 /* list.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60208 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60248 /* main.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60209 /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60249 /* material.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60210 /* move.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60250 /* move.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60211 /* move_check.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60251 /* move_check.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60212 /* move_do.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60252 /* move_do.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60213 /* move_evasion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60253 /* move_evasion.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60214 /* move_gen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60254 /* move_gen.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60215 /* move_legal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60255 /* move_legal.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60216 /* option.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60256 /* option.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60217 /* pawn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60257 /* pawn.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60218 /* piece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60258 /* piece.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60219 /* posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60259 /* posix.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60220 /* protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60260 /* protocol.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60221 /* pst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60261 /* pst.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60222 /* pv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60262 /* pv.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60223 /* random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60263 /* random.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60224 /* recog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60264 /* recog.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60225 /* search.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60265 /* search.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60226 /* search_full.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60266 /* search_full.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60227 /* see.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60267 /* see.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60228 /* sort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60268 /* sort.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60229 /* square.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60269 /* square.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60230 /* trans.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60270 /* trans.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60231 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60271 /* util.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60232 /* value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60272 /* value.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60233 /* vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60273 /* vector.cpp */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+		A1B2C3D4E5F60234 /* GnuChessBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60274 /* GnuChessBridge.mm */; settings = {COMPILER_FLAGS = "-UDEBUG"; }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A1B2C3D4E5F60006 /* LocalChess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocalChess.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B2C3D4E5F60010 /* LocalChessApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalChessApp.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60011 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60012 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60013 /* PieceArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceArt.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60014 /* CoachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60015 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60016 /* ChessCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessCore.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60017 /* GnuChessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GnuChessEngine.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60018 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60019 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A1B2C3D4E5F60102 /* LocalChessUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalChessUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B2C3D4E5F60108 /* LocalChessUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalChessUITests.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60113 /* BoardOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardOrientation.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60241 /* attack.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/attack.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60242 /* board.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/board.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60243 /* book.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/book.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60244 /* eval.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/eval.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60245 /* fen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/fen.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60246 /* hash.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/hash.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60247 /* list.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/list.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60248 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/main.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60249 /* material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/material.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60250 /* move.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/move.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60251 /* move_check.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/move_check.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60252 /* move_do.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/move_do.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60253 /* move_evasion.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/move_evasion.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60254 /* move_gen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/move_gen.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60255 /* move_legal.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/move_legal.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60256 /* option.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/option.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60257 /* pawn.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/pawn.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60258 /* piece.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/piece.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60259 /* posix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/posix.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60260 /* protocol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/protocol.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60261 /* pst.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/pst.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60262 /* pv.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/pv.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60263 /* random.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/random.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60264 /* recog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/recog.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60265 /* search.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/search.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60266 /* search_full.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/search_full.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60267 /* see.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/see.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60268 /* sort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/sort.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60269 /* square.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/square.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60270 /* trans.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/trans.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60271 /* util.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/util.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60272 /* value.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/value.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60273 /* vector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gnuchess/engine/vector.cpp; sourceTree = "<group>"; };
+		A1B2C3D4E5F60274 /* GnuChessBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = gnuchess/GnuChessBridge.mm; sourceTree = "<group>"; };
+		A1B2C3D4E5F60276 /* GnuChessBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gnuchess/GnuChessBridge.h; sourceTree = "<group>"; };
+		A1B2C3D4E5F60275 /* LocalChess-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalChess-Bridging-Header.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A1B2C3D4E5F60009 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A1B2C3D4E5F60002 = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D4E5F60004 /* LocalChess */,
+				A1B2C3D4E5F60109 /* LocalChessUITests */,
+				A1B2C3D4E5F60003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F60003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D4E5F60006 /* LocalChess.app */,
+				A1B2C3D4E5F60102 /* LocalChessUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F60004 /* LocalChess */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D4E5F60010 /* LocalChessApp.swift */,
+				A1B2C3D4E5F60011 /* ContentView.swift */,
+				A1B2C3D4E5F60012 /* BoardView.swift */,
+				A1B2C3D4E5F60013 /* PieceArt.swift */,
+				A1B2C3D4E5F60014 /* CoachView.swift */,
+				A1B2C3D4E5F60015 /* GameState.swift */,
+				A1B2C3D4E5F60016 /* ChessCore.swift */,
+				A1B2C3D4E5F60017 /* GnuChessEngine.swift */,
+				A1B2C3D4E5F60018 /* Haptics.swift */,
+				A1B2C3D4E5F60113 /* BoardOrientation.swift */,
+				A1B2C3D4E5F60241 /* attack.cpp */,
+				A1B2C3D4E5F60242 /* board.cpp */,
+				A1B2C3D4E5F60243 /* book.cpp */,
+				A1B2C3D4E5F60244 /* eval.cpp */,
+				A1B2C3D4E5F60245 /* fen.cpp */,
+				A1B2C3D4E5F60246 /* hash.cpp */,
+				A1B2C3D4E5F60247 /* list.cpp */,
+				A1B2C3D4E5F60248 /* main.cpp */,
+				A1B2C3D4E5F60249 /* material.cpp */,
+				A1B2C3D4E5F60250 /* move.cpp */,
+				A1B2C3D4E5F60251 /* move_check.cpp */,
+				A1B2C3D4E5F60252 /* move_do.cpp */,
+				A1B2C3D4E5F60253 /* move_evasion.cpp */,
+				A1B2C3D4E5F60254 /* move_gen.cpp */,
+				A1B2C3D4E5F60255 /* move_legal.cpp */,
+				A1B2C3D4E5F60256 /* option.cpp */,
+				A1B2C3D4E5F60257 /* pawn.cpp */,
+				A1B2C3D4E5F60258 /* piece.cpp */,
+				A1B2C3D4E5F60259 /* posix.cpp */,
+				A1B2C3D4E5F60260 /* protocol.cpp */,
+				A1B2C3D4E5F60261 /* pst.cpp */,
+				A1B2C3D4E5F60262 /* pv.cpp */,
+				A1B2C3D4E5F60263 /* random.cpp */,
+				A1B2C3D4E5F60264 /* recog.cpp */,
+				A1B2C3D4E5F60265 /* search.cpp */,
+				A1B2C3D4E5F60266 /* search_full.cpp */,
+				A1B2C3D4E5F60267 /* see.cpp */,
+				A1B2C3D4E5F60268 /* sort.cpp */,
+				A1B2C3D4E5F60269 /* square.cpp */,
+				A1B2C3D4E5F60270 /* trans.cpp */,
+				A1B2C3D4E5F60271 /* util.cpp */,
+				A1B2C3D4E5F60272 /* value.cpp */,
+				A1B2C3D4E5F60273 /* vector.cpp */,
+				A1B2C3D4E5F60274 /* GnuChessBridge.mm */,
+				A1B2C3D4E5F60276 /* GnuChessBridge.h */,
+				A1B2C3D4E5F60275 /* LocalChess-Bridging-Header.h */,
+				A1B2C3D4E5F60019 /* Assets.xcassets */,
+			);
+			path = LocalChess;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F60109 /* LocalChessUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D4E5F60108 /* LocalChessUITests.swift */,
+			);
+			path = LocalChessUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A1B2C3D4E5F60005 /* LocalChess */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1B2C3D4E5F6000B /* Build configuration list for PBXNativeTarget "LocalChess" */;
+			buildPhases = (
+				A1B2C3D4E5F60007 /* Sources */,
+				A1B2C3D4E5F60009 /* Frameworks */,
+				A1B2C3D4E5F60008 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LocalChess;
+			productName = LocalChess;
+			productReference = A1B2C3D4E5F60006 /* LocalChess.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A1B2C3D4E5F60101 /* LocalChessUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1B2C3D4E5F60104 /* Build configuration list for PBXNativeTarget "LocalChessUITests" */;
+			buildPhases = (
+				A1B2C3D4E5F60103 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A1B2C3D4E5F60110 /* PBXTargetDependency */,
+			);
+			name = LocalChessUITests;
+			productName = LocalChessUITests;
+			productReference = A1B2C3D4E5F60102 /* LocalChessUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXTargetDependency section */
+		A1B2C3D4E5F60110 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A1B2C3D4E5F60005 /* LocalChess */;
+			targetProxy = A1B2C3D4E5F60111 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXContainerItemProxy section */
+		A1B2C3D4E5F60111 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1B2C3D4E5F60001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A1B2C3D4E5F60005;
+			remoteInfo = LocalChess;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXProject section */
+		A1B2C3D4E5F60001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1700;
+			};
+			buildConfigurationList = A1B2C3D4E5F6000A /* Build configuration list for PBXProject "LocalChess" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A1B2C3D4E5F60002;
+			productRefGroup = A1B2C3D4E5F60003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A1B2C3D4E5F60005 /* LocalChess */,
+				A1B2C3D4E5F60101 /* LocalChessUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A1B2C3D4E5F60008 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1B2C3D4E5F60029 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A1B2C3D4E5F60007 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1B2C3D4E5F60020 /* LocalChessApp.swift in Sources */,
+				A1B2C3D4E5F60021 /* ContentView.swift in Sources */,
+				A1B2C3D4E5F60022 /* BoardView.swift in Sources */,
+				A1B2C3D4E5F60023 /* PieceArt.swift in Sources */,
+				A1B2C3D4E5F60024 /* CoachView.swift in Sources */,
+				A1B2C3D4E5F60025 /* GameState.swift in Sources */,
+				A1B2C3D4E5F60026 /* ChessCore.swift in Sources */,
+				A1B2C3D4E5F60027 /* GnuChessEngine.swift in Sources */,
+				A1B2C3D4E5F60028 /* Haptics.swift in Sources */,
+				A1B2C3D4E5F60112 /* BoardOrientation.swift in Sources */,
+				A1B2C3D4E5F60201 /* attack.cpp in Sources */,
+				A1B2C3D4E5F60202 /* board.cpp in Sources */,
+				A1B2C3D4E5F60203 /* book.cpp in Sources */,
+				A1B2C3D4E5F60204 /* eval.cpp in Sources */,
+				A1B2C3D4E5F60205 /* fen.cpp in Sources */,
+				A1B2C3D4E5F60206 /* hash.cpp in Sources */,
+				A1B2C3D4E5F60207 /* list.cpp in Sources */,
+				A1B2C3D4E5F60208 /* main.cpp in Sources */,
+				A1B2C3D4E5F60209 /* material.cpp in Sources */,
+				A1B2C3D4E5F60210 /* move.cpp in Sources */,
+				A1B2C3D4E5F60211 /* move_check.cpp in Sources */,
+				A1B2C3D4E5F60212 /* move_do.cpp in Sources */,
+				A1B2C3D4E5F60213 /* move_evasion.cpp in Sources */,
+				A1B2C3D4E5F60214 /* move_gen.cpp in Sources */,
+				A1B2C3D4E5F60215 /* move_legal.cpp in Sources */,
+				A1B2C3D4E5F60216 /* option.cpp in Sources */,
+				A1B2C3D4E5F60217 /* pawn.cpp in Sources */,
+				A1B2C3D4E5F60218 /* piece.cpp in Sources */,
+				A1B2C3D4E5F60219 /* posix.cpp in Sources */,
+				A1B2C3D4E5F60220 /* protocol.cpp in Sources */,
+				A1B2C3D4E5F60221 /* pst.cpp in Sources */,
+				A1B2C3D4E5F60222 /* pv.cpp in Sources */,
+				A1B2C3D4E5F60223 /* random.cpp in Sources */,
+				A1B2C3D4E5F60224 /* recog.cpp in Sources */,
+				A1B2C3D4E5F60225 /* search.cpp in Sources */,
+				A1B2C3D4E5F60226 /* search_full.cpp in Sources */,
+				A1B2C3D4E5F60227 /* see.cpp in Sources */,
+				A1B2C3D4E5F60228 /* sort.cpp in Sources */,
+				A1B2C3D4E5F60229 /* square.cpp in Sources */,
+				A1B2C3D4E5F60230 /* trans.cpp in Sources */,
+				A1B2C3D4E5F60231 /* util.cpp in Sources */,
+				A1B2C3D4E5F60232 /* value.cpp in Sources */,
+				A1B2C3D4E5F60233 /* vector.cpp in Sources */,
+				A1B2C3D4E5F60234 /* GnuChessBridge.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1B2C3D4E5F60103 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1B2C3D4E5F60107 /* LocalChessUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A1B2C3D4E5F6000C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A1B2C3D4E5F6000D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		A1B2C3D4E5F6000E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5C37SUU88J;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = LocalChess;
+				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ai.sdsa.localchess.app;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/LocalChess/gnuchess";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/LocalChess/LocalChess-Bridging-Header.h";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A1B2C3D4E5F6000F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5C37SUU88J;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = LocalChess;
+				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ai.sdsa.localchess.app;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/LocalChess/gnuchess";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/LocalChess/LocalChess-Bridging-Header.h";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A1B2C3D4E5F60105 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = WATH6M5JS;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = ai.sdsa.localchess.appUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LocalChess;
+			};
+			name = Debug;
+		};
+		A1B2C3D4E5F60106 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = WATH6M5JS;
+				ENABLE_NS_ASSERTIONS = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ai.sdsa.localchess.appUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LocalChess;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A1B2C3D4E5F6000A /* Build configuration list for PBXProject "LocalChess" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1B2C3D4E5F6000C /* Debug */,
+				A1B2C3D4E5F6000D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1B2C3D4E5F6000B /* Build configuration list for PBXNativeTarget "LocalChess" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1B2C3D4E5F6000E /* Debug */,
+				A1B2C3D4E5F6000F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1B2C3D4E5F60104 /* Build configuration list for PBXNativeTarget "LocalChessUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1B2C3D4E5F60105 /* Debug */,
+				A1B2C3D4E5F60106 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A1B2C3D4E5F60001 /* Project object */;
+}

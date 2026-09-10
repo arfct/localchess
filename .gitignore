@@ -1,0 +1,17 @@
+# Xcode / macOS
+.DS_Store
+xcuserdata/
+*.xcworkspace/xcuserdata/
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# CocoaPods / Carthage (unused, but never commit these)
+Pods/
+Carthage/Build/
