@@ -472,8 +472,8 @@ struct MenuSheet: View {
 
     private var footnotes: some View {
         VStack(spacing: 6) {
-            Text(GnuChessAdapter.shared.engineStatusText)
-            Text("Engine: GNU Chess 6.2.5 by the GNU Chess team (GPLv3). Pieces: Cburnett set by Colin M.L. Burnett (Wikimedia Commons), BSD license.")
+            Text(ArasanAdapter.shared.engineStatusText)
+            Text("Engine: Arasan 26.0 by Jon Dart (MIT). Pieces: Cburnett set by Colin M.L. Burnett (Wikimedia Commons), BSD license.")
         }
         .font(.footnote)
         .foregroundColor(.gray.opacity(0.8))

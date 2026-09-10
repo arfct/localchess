@@ -67,7 +67,7 @@ final class GameState: ObservableObject {
         redoPoints = []
         uciMoves = []
         redoUci = []
-        GnuChessAdapter.shared.newGame()
+        ArasanAdapter.shared.newGame()
         selected = nil
         legalTargets = []
         status = .ongoing
@@ -239,7 +239,7 @@ final class GameState: ObservableObject {
             guard let self else { return }
             let gameMoves = await MainActor.run { self.uciMoves }
             guard !Task.isCancelled else { return }
-            let reply = await GnuChessAdapter.shared.bestMove(in: position, difficulty: level, uciMoves: gameMoves)
+            let reply = await ArasanAdapter.shared.bestMove(in: position, difficulty: level, uciMoves: gameMoves)
             guard !Task.isCancelled else { return }
             await MainActor.run { [weak self] in
                 guard let self else { return }

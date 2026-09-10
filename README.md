@@ -10,17 +10,33 @@ character with speech-bubble quips, countdown timer + points pills, chunky
 cute pieces, gold last-move highlight, legal-move dots, undo/redo buttons,
 and a Checkmate! card with SHOW IT OFF / CONTINUE.
 
-## Engine (actual GNU Chess)
+## Engine (actual Arasan)
 
-- The opponent is the real GNU Chess 6.2.5 engine, vendored as C++ under
-  `LocalChess/gnuchess/engine` (from https://github.com/madnight/gnuchess)
-  and linked directly into the app — no separate binary, no network.
+- The opponent is the real Arasan 26.0 engine by Jon Dart, vendored as C++
+  under `LocalChess/arasan/engine` (from https://github.com/jdart1/arasan-chess,
+  MIT license — see `LocalChess/arasan/LICENSE`, NNUE network weights
+  included) and linked directly into the app — no separate binary, no network.
   It runs on its own pthread and speaks UCI over two POSIX pipes via
-  `GnuChessBridge` (`LocalChess/gnuchess/GnuChessBridge.{h,mm}`); only the
-  engine core is compiled (no frontend/adapter processes, no stdin/stdout
-  tricks — iOS forbids spawning processes, threads + pipes are used
-  instead). Think time per difficulty: Chill 250ms / Clever 800ms /
-  Beast 2500ms (`go movetime`), 32MB hash, no opening book.
+  `ArasanBridge` (`LocalChess/arasan/ArasanBridge.{h,mm}`): stdin/stdout are
+  dup2'ed onto the pipes in the engine thread (iOS forbids spawning
+  processes). Only the engine core is compiled (no GUI, book, tablebase, or
+  test tools). Think time per difficulty: Chill 250ms / Clever 800ms /
+  Beast 2500ms (`go movetime`) plus UCI_Elo caps (1100 / 1700 / unlimited),
+  32MB hash, single thread, no opening book.
+- iOS specifics: compiled with `-D_MAC -DSIMD -DNEON`; the 25MB NNUE net
+  ships inside the app bundle next to the binary so the engine finds it at
+  startup. Two small shims in `LocalChess/arasan/ios_compat/` (ours, upstream
+  untouched): `libproc.h` for the macOS-only `<libproc.h>` (proc_pidpath via
+  dyld), and `no_setrlimit.h` force-included into `globals.cpp` — Arasan's
+  startup raises RLIMIT_STACK and calls exit(-1) when the iOS sandbox denies
+  it, which killed the app at engine boot; the shim reports a large limit so
+  the call is skipped (search threads size their own stacks explicitly, which
+  is allowed). The bridge also spawns the engine pthread with an 8MB stack.
+- One-line change to vendored `engine/search.cpp` (`Search::reduce`): the
+  LMR reduction total can go slightly negative, which Apple's hardened
+  `std::clamp` aborts on (libstdc++ tolerates it) — the bound is floored at
+  zero, matching the function's own "do not allow negative reduction"
+  intent. Worth reporting upstream.
 - Every engine reply is validated against our own legal move generator
   before it is played, and any engine failure falls back to the built-in
   `LocalSearchEngine` in `LocalChess/GnuChessEngine.swift` (alpha-beta +
@@ -30,13 +46,13 @@ and a Checkmate! card with SHOW IT OFF / CONTINUE.
   stalemate, 50-move and insufficient-material draws. Verified with perft:
   20 / 400 / 8902 from the start position, plus Fool's-mate detection.
 
-## License note (GPLv3)
+## License
 
-Linking GNU Chess makes the app a derivative work under the GNU General
-Public License v3 or later (see `LocalChess/gnuchess/COPYING`). That is
-fine for personal use and sideloaded development builds, but the App
-Store's DRM terms conflict with GPLv3, so do not ship this to the App
-Store without resolving that (e.g. swapping the engine).
+MIT. Arasan (engine + network) is MIT-licensed by Jon Dart (see
+`LocalChess/arasan/LICENSE`, attribution kept in the in-app menu); piece
+art is BSD (see Credits); everything else is original to this repo.
+No App Store conflict: unlike the previous GNU Chess engine, nothing here
+is copyleft.
 
 ## Credits
 

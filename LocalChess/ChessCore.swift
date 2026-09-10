@@ -2,11 +2,10 @@
 // Pure-Swift local chess core: board model, full legal move generation,
 // check / checkmate / stalemate / draw detection.
 // This module is the in-app game engine core. It implements the same
-// contract as a GNU Chess style engine (position in, best move out, fully
-// offline) and additionally exposes the UI adapter hook
-// `GnuChessAdapter` (see GnuChessEngine.swift) which can drive an external
-// `gnuchess --xboard` binary when one is installed, falling back to the
-// built-in search otherwise. No network access is used anywhere.
+// contract as a UCI-style engine (position in, best move out, fully
+// offline) and additionally validates every reply from the real vendored
+// engine via `ArasanAdapter` (see GnuChessEngine.swift) before it is
+// played. No network access is used anywhere.
 
 import Foundation
 

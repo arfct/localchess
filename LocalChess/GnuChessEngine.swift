@@ -1,9 +1,8 @@
 // GnuChessEngine.swift — LocalChess
-// Local search engine in the spirit of GNU Chess (alpha-beta + piece-square
-// evaluation, fully offline), plus a `GnuChessAdapter` that can drive a real
-// `gnuchess --xboard` binary when installed (e.g. via Homebrew on macOS) and
-// otherwise falls back to the built-in search. On iOS the built-in search is
-// always used, so the game never needs network access.
+// Built-in local search engine (alpha-beta + piece-square tables, fully
+// offline), plus an `ArasanAdapter` that drives the real vendored Arasan
+// engine and otherwise falls back to the built-in search. The game never
+// needs network access.
 
 import Foundation
 
@@ -25,12 +24,20 @@ enum EngineDifficulty: Int, CaseIterable, Identifiable {
         case .beast: return 3
         }
     }
-    /// Think time handed to real GNU Chess via `go movetime` (milliseconds).
+    /// Think time handed to the real engine via `go movetime` (milliseconds).
     var movetimeMs: Int {
         switch self {
         case .chill: return 250
         case .clever: return 800
         case .beast: return 2500
+        }
+    }
+    /// Arasan UCI_Elo cap (its scale runs 1000-3450). Beast plays unlimited.
+    var eloCap: Int? {
+        switch self {
+        case .chill: return 1100
+        case .clever: return 1700
+        case .beast: return nil
         }
     }
     /// Randomness (centipawns) to keep easy levels human.
@@ -213,37 +220,37 @@ struct LocalSearchEngine {
     }
 }
 
-// MARK: - GNU Chess adapter
+// MARK: - Arasan adapter
 
-/// Drives the real GNU Chess engine (6.2.5, vendored C++ under
-/// LocalChess/gnuchess, GPLv3 — see gnuchess/COPYING). The engine runs on
-/// its own pthread and speaks UCI over two POSIX pipes via GnuChessBridge;
-/// no frontend/adapter processes, no stdin/stdout tricks, no network.
+/// Drives the real Arasan engine (26.0, vendored C++ under LocalChess/arasan,
+/// MIT — see arasan/LICENSE, network weights included). The engine runs on
+/// its own pthread and speaks UCI over two POSIX pipes via ArasanBridge
+/// (stdin/stdout dup2'ed in the engine thread); no processes, no network.
 /// Every reply is validated against our own legal move generator before it
 /// is played, and any failure transparently falls back to the built-in
 /// `LocalSearchEngine`, so the game can never get stuck without a move.
-final class GnuChessAdapter {
-    static let shared = GnuChessAdapter()
+final class ArasanAdapter {
+    static let shared = ArasanAdapter()
 
-    private let bridge = GnuChessBridge()
+    private let bridge = ArasanBridge()
 
-    /// What powers the coach. Shown in the menu for transparency.
-    var engineName: String { "GNU Chess 6.2.5" }
+    /// What powers the yeti. Shown in the menu for transparency.
+    var engineName: String { "Arasan 26.0" }
 
     var engineStatusText: String {
-        "GNU Chess 6.2.5 engine, linked into the app. 100% offline — no network needed."
+        "Arasan 26.0 engine, linked into the app. 100% offline — no network needed."
     }
 
     /// Async best-move lookup. `uciMoves` is the full game in UCI coordinate
-    /// notation from the start position, so GNU Chess reconstructs the exact
+    /// notation from the start position, so Arasan reconstructs the exact
     /// position (castling rights, en passant) by replay.
     func bestMove(in board: ChessBoard, difficulty: EngineDifficulty, uciMoves: [String]) async -> ChessMove? {
-        if let reply = await gnuReply(uciMoves: uciMoves, movetimeMs: difficulty.movetimeMs),
+        if let reply = await arasanReply(uciMoves: uciMoves, difficulty: difficulty),
            let match = match(reply: reply, in: board) {
             return match
         }
         // Fallback: built-in search (same contract, fully offline).
-        NSLog("[LocalChess] GNU Chess unavailable; using built-in fallback")
+        NSLog("[LocalChess] Arasan unavailable; using built-in fallback")
         return await Task.detached(priority: .userInitiated) {
             var engine = LocalSearchEngine()
             return engine.bestMove(in: board, depth: difficulty.depth, jitter: difficulty.jitter)
@@ -260,12 +267,17 @@ final class GnuChessAdapter {
 
     // MARK: UCI over the bridge (always off the main thread)
 
-    private func gnuReply(uciMoves: [String], movetimeMs: Int) async -> String? {
+    private func arasanReply(uciMoves: [String], difficulty: EngineDifficulty) async -> String? {
         await Task.detached(priority: .userInitiated) { [bridge] in
             guard bridge.start() else { return nil }
+            if let cap = difficulty.eloCap {
+                bridge.configureStrength(withElo: cap, limited: true)
+            } else {
+                bridge.configureStrength(withElo: 0, limited: false)
+            }
             guard let reply = bridge.bestMove(withMoves: uciMoves,
-                                              movetimeMs: movetimeMs) else { return nil }
-            NSLog("[LocalChess] GNU Chess says %@", reply)
+                                              movetimeMs: difficulty.movetimeMs) else { return nil }
+            NSLog("[LocalChess] Arasan says %@", reply)
             return reply
         }.value
     }
