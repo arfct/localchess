@@ -1,3 +1,3 @@
-// LocalChess-Bridging-Header.h — exposes the GNU Chess bridge to Swift.
+// LocalChess-Bridging-Header.h — exposes the Arasan engine bridge to Swift.
 
 #import "ArasanBridge.h"

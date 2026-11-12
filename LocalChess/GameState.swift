@@ -53,7 +53,7 @@ final class GameState: ObservableObject {
     /// restores the exact cumulative total instead of recomputing it.
     private var historyPoints: [Int] = []
     private var redoPoints: [Int] = []
-    /// Full game in UCI coordinate notation for the GNU Chess engine, plus
+    /// Full game in UCI coordinate notation for the engine, plus
     /// the redo counterpart. Mirrors history/redoStack exactly.
     private var uciMoves: [String] = []
     private var redoUci: [String] = []
@@ -577,7 +577,7 @@ final class GameState: ObservableObject {
     }
 }
 
-// MARK: - Coach content (original lines in the reference's spirit)
+// MARK: - Coach content
 
 enum CoachMood { case thinking, happy, excited, worried, sad }
 

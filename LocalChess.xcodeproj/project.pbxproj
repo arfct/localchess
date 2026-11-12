@@ -15,7 +15,7 @@
 		A1B2C3D4E5F60024 /* CoachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60014 /* CoachView.swift */; };
 		A1B2C3D4E5F60025 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60015 /* GameState.swift */; };
 		A1B2C3D4E5F60026 /* ChessCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60016 /* ChessCore.swift */; };
-		A1B2C3D4E5F60027 /* GnuChessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60017 /* GnuChessEngine.swift */; };
+		A1B2C3D4E5F60027 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60017 /* Engine.swift */; };
 		A1B2C3D4E5F60028 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60018 /* Haptics.swift */; };
 		A1B2C3D4E5F60029 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60019 /* Assets.xcassets */; };
 		A1B2C3D4E5F60107 /* LocalChessUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60108 /* LocalChessUITests.swift */; };
@@ -106,7 +106,7 @@
 		A1B2C3D4E5F60014 /* CoachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachView.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60015 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60016 /* ChessCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessCore.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F60017 /* GnuChessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GnuChessEngine.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60017 /* Engine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60018 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60019 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1B2C3D4E5F60102 /* LocalChessUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalChessUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,7 +197,7 @@
 				A1B2C3D4E5F60014 /* CoachView.swift */,
 				A1B2C3D4E5F60015 /* GameState.swift */,
 				A1B2C3D4E5F60016 /* ChessCore.swift */,
-				A1B2C3D4E5F60017 /* GnuChessEngine.swift */,
+				A1B2C3D4E5F60017 /* Engine.swift */,
 				A1B2C3D4E5F60018 /* Haptics.swift */,
 				A9B8C7D6E5F4FF0101 /* GameReview.swift */,
 				A9B8C7D6E5F4FF0201 /* ReviewView.swift */,
@@ -396,7 +396,7 @@
 				A1B2C3D4E5F60024 /* CoachView.swift in Sources */,
 				A1B2C3D4E5F60025 /* GameState.swift in Sources */,
 				A1B2C3D4E5F60026 /* ChessCore.swift in Sources */,
-				A1B2C3D4E5F60027 /* GnuChessEngine.swift in Sources */,
+				A1B2C3D4E5F60027 /* Engine.swift in Sources */,
 				A1B2C3D4E5F60028 /* Haptics.swift in Sources */,
 				A9B8C7D6E5F4FF0102 /* GameReview.swift in Sources */,
 				A9B8C7D6E5F4FF0202 /* ReviewView.swift in Sources */,

@@ -4,7 +4,7 @@
 // This module is the in-app game engine core. It implements the same
 // contract as a UCI-style engine (position in, best move out, fully
 // offline) and additionally validates every reply from the real vendored
-// engine via `ArasanAdapter` (see GnuChessEngine.swift) before it is
+// engine via `ArasanAdapter` (see Engine.swift) before it is
 // played. No network access is used anywhere.
 
 import Foundation
@@ -30,7 +30,7 @@ enum PieceType: Int, Codable, CaseIterable {
         }
     }
 
-    /// Duolingo-style points awarded for capturing this piece.
+    /// Points awarded for capturing this piece.
     var points: Int {
         switch self {
         case .pawn: return 1

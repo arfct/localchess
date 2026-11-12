@@ -1,5 +1,5 @@
 // LocalChessApp.swift — LocalChess
-// Offline Duolingo-style chess vs a local GNU-Chess-style engine.
+// Offline chess against the Arasan engine, running on the phone.
 
 import SwiftUI
 

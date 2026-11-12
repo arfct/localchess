@@ -1,14 +1,14 @@
 # LocalChess
 
-An offline, Duolingo-style chess game for iOS. Play as White or Black against
-a local engine, or play two-player on one phone. No network access required —
-there is no networking code in the target at all.
+An offline chess game for iPhone, made for iPhone Duo. Play as White or
+Black against a yeti that runs a real chess engine on the phone, or play a
+friend on the same phone. No network access required — there is no
+networking code in the target at all.
 
-The look and feel follows the reference screen recording
-(`ScreenRecording_09-08-2026 22-59-31_1.MP4`): dark theme, yeti coach
-character with speech-bubble quips, countdown timer + points pills, chunky
-cute pieces, gold last-move highlight, legal-move dots, undo/redo buttons,
-and a Checkmate! card with SHOW IT OFF / CONTINUE.
+A dark board with chunky pieces, a yeti coach with speech-bubble quips,
+clocks, points for captures, a gold last-move highlight, legal-move dots,
+undo and redo, a checkmate card to show off, and a post-game review that
+grades every move.
 
 ## Engine (actual Arasan)
 
@@ -39,7 +39,7 @@ and a Checkmate! card with SHOW IT OFF / CONTINUE.
   intent. Worth reporting upstream.
 - Every engine reply is validated against our own legal move generator
   before it is played, and any engine failure falls back to the built-in
-  `LocalSearchEngine` in `LocalChess/GnuChessEngine.swift` (alpha-beta +
+  `LocalSearchEngine` in `LocalChess/Engine.swift` (alpha-beta +
   piece-square tables), so the game can never get stuck without a move.
 - The rules core lives in `LocalChess/ChessCore.swift`: full legal move
   generation (castling, en passant, promotion), check / checkmate /
@@ -51,8 +51,7 @@ and a Checkmate! card with SHOW IT OFF / CONTINUE.
 MIT. Arasan (engine + network) is MIT-licensed by Jon Dart (see
 `LocalChess/arasan/LICENSE`, attribution kept in the in-app menu); piece
 art is BSD (see Credits); everything else is original to this repo.
-No App Store conflict: unlike the previous GNU Chess engine, nothing here
-is copyleft.
+Nothing here is copyleft, so nothing conflicts with App Store distribution.
 
 ## Credits
 
