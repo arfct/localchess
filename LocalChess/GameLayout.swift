@@ -86,14 +86,18 @@ struct PlayerStrip: View {
         HStack(spacing: 10) {
             Circle()
                 .fill(color == .white ? Color.white : Color.black)
-                .frame(width: large ? 18 : 14, height: large ? 18 : 14)
+                .frame(width: large ? 18 : 12, height: large ? 18 : 12)
                 .overlay(Circle().stroke(Color.white.opacity(0.45), lineWidth: 1.5))
-            VStack(alignment: .leading, spacing: 2) {
-                Text(name)
-                    .font(.system(size: large ? 17 : 15, weight: .black, design: .rounded))
-                    .foregroundColor(.white)
-                    .lineLimit(1)
-                CapturedRow(game: game, color: color, size: large ? 18 : 15)
+            if large {
+                VStack(alignment: .leading, spacing: 2) {
+                    nameText
+                    if hasCaptures { CapturedRow(game: game, color: color, size: 18) }
+                }
+            } else {
+                // One line on a small screen: name, then what they've taken.
+                nameText
+                CapturedRow(game: game, color: color, size: 15)
+                    .layoutPriority(-1)
             }
             Spacer(minLength: 4)
             if isYeti && game.engineThinking {
@@ -106,20 +110,34 @@ struct PlayerStrip: View {
                 ClockPill(game: game, color: color, large: large)
             }
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, large ? 10 : 7)
+        .frame(minHeight: large ? 40 : 30)
+        .padding(.horizontal, large ? 12 : 10)
+        .padding(.vertical, large ? 8 : 3)
         .background(
-            RoundedRectangle(cornerRadius: 14)
-                .fill(Color.white.opacity(active ? 0.09 : 0.03))
+            RoundedRectangle(cornerRadius: large ? 14 : 10)
+                .fill(Color.white.opacity(active ? 0.08 : (large ? 0.03 : 0)))
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 14)
-                .stroke(active ? BoardTheme.neonGreen.opacity(0.7) : Color.white.opacity(0.08),
-                        lineWidth: active ? 2 : 1)
+            RoundedRectangle(cornerRadius: large ? 14 : 10)
+                .stroke(active ? BoardTheme.neonGreen.opacity(0.7) : Color.white.opacity(large ? 0.08 : 0),
+                        lineWidth: active ? 1.5 : 1)
         )
         .animation(.easeOut(duration: 0.2), value: active)
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("strip-\(color == .white ? "white" : "black")")
+        .accessibilityValue(active ? "to move" : "")
+    }
+
+    private var nameText: some View {
+        Text(name)
+            .font(.system(size: large ? 17 : 15, weight: .black, design: .rounded))
+            .foregroundColor(.white)
+            .lineLimit(1)
+            .fixedSize()
+    }
+
+    private var hasCaptures: Bool {
+        !game.captured(by: color).isEmpty
     }
 }
 
@@ -132,13 +150,13 @@ struct ClockPill: View {
         let running = game.runningClock == color
         let low = game.seconds(color) < 60
         Text(game.clockText(color))
-            .font(.system(size: large ? 22 : 18, weight: .black, design: .rounded))
+            .font(.system(size: large ? 22 : 16, weight: .black, design: .rounded))
             .monospacedDigit()
             .foregroundColor(running ? Color(red: 0.10, green: 0.15, blue: 0.17) : (low ? .red : .gray))
-            .padding(.horizontal, 10)
-            .padding(.vertical, 4)
+            .padding(.horizontal, large ? 10 : 8)
+            .padding(.vertical, large ? 4 : 2)
             .background(
-                RoundedRectangle(cornerRadius: 9)
+                RoundedRectangle(cornerRadius: large ? 9 : 7)
                     .fill(running ? (low ? Color.red : BoardTheme.neonGreen) : Color.white.opacity(0.06))
             )
             .accessibilityIdentifier("clock-\(color == .white ? "white" : "black")")

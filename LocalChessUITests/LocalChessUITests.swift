@@ -12,6 +12,22 @@ final class LocalChessUITests: XCTestCase {
         app.descendants(matching: .any)[id]
     }
 
+    /// Waits until it's `side`'s move ("white" or "black"), as its strip says.
+    private func waitToMove(_ app: XCUIApplication, _ side: String, timeout: TimeInterval = 10) -> Bool {
+        let strip = el(app, "strip-" + side)
+        let done = NSPredicate(format: "value == %@", "to move")
+        return XCTWaiter().wait(for: [XCTNSPredicateExpectation(predicate: done, object: strip)],
+                                timeout: timeout) == .completed
+    }
+
+    /// Waits for a two-player game: the strips name the sides, not "You".
+    private func waitTwoPlayer(_ app: XCUIApplication) -> Bool {
+        let strip = el(app, "strip-white")
+        let done = NSPredicate(format: "label BEGINSWITH %@", "White")
+        return XCTWaiter().wait(for: [XCTNSPredicateExpectation(predicate: done, object: strip)],
+                                timeout: 5) == .completed
+    }
+
     func testTapSelectsCorrectSquare() throws {
         let app = XCUIApplication()
         app.launchArguments += ["-LCFresh"]
@@ -115,7 +131,7 @@ final class LocalChessUITests: XCTestCase {
             "coach toggle would not switch off"
         )
         el(app, "startGame").tap()
-        XCTAssertTrue(app.staticTexts["2 players · local"].waitForExistence(timeout: 5),
+        XCTAssertTrue(waitTwoPlayer(app),
                       "game did not enter 2-player mode")
 
         // 1.e4 e5 2.Qh5 Nc6 3.Bc4 Nf6 4.Qxf7#
@@ -177,7 +193,7 @@ final class LocalChessUITests: XCTestCase {
             Thread.sleep(forTimeInterval: 0.5)
         }
         el(app, "startGame").tap()
-        XCTAssertTrue(app.staticTexts["2 players · local"].waitForExistence(timeout: 5))
+        XCTAssertTrue(waitTwoPlayer(app))
 
         for (from, to) in [("sq-f2", "sq-f3"), ("sq-e7", "sq-e5"),
                            ("sq-g2", "sq-g4"), ("sq-d8", "sq-h4")] {
@@ -212,7 +228,7 @@ final class LocalChessUITests: XCTestCase {
         el(app, "startGame").tap()
 
         // Engine (White) moves first; wait until it hands over Black's move.
-        XCTAssertTrue(app.staticTexts["Your move — Black"].waitForExistence(timeout: 30))
+        XCTAssertTrue(waitToMove(app, "black", timeout: 30))
 
         let board = el(app, "board")
         let midY = board.frame.midY
@@ -241,7 +257,7 @@ final class LocalChessUITests: XCTestCase {
             Thread.sleep(forTimeInterval: 0.5)
         }
         el(app, "startGame").tap()
-        XCTAssertTrue(app.staticTexts["2 players · local"].waitForExistence(timeout: 5))
+        XCTAssertTrue(waitTwoPlayer(app))
     }
 
     private func drag(_ app: XCUIApplication, _ from: String, _ to: String) {
@@ -270,11 +286,11 @@ final class LocalChessUITests: XCTestCase {
         drag(app, "sq-g1", "sq-f3")
         XCTAssertTrue(value(app, "sq-f3").contains("white knight"), "drag to f3 didn't move the knight")
         XCTAssertFalse(value(app, "sq-g1").contains("knight"))
-        XCTAssertTrue(app.staticTexts["Black to move"].waitForExistence(timeout: 5))
+        XCTAssertTrue(waitToMove(app, "black"))
 
         drag(app, "sq-e7", "sq-e5")
         XCTAssertTrue(value(app, "sq-e5").contains("black pawn"))
-        XCTAssertTrue(app.staticTexts["White to move"].waitForExistence(timeout: 5))
+        XCTAssertTrue(waitToMove(app, "white"))
     }
 
     /// A pawn reaching the last rank asks which piece it becomes, on the board.

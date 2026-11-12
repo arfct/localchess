@@ -85,19 +85,20 @@ struct ContentView: View {
     private func arranged(_ a: Arrangement, size: CGSize) -> some View {
         switch a {
         case .compact:
-            VStack(spacing: 8) {
-                header(large: false)
+            VStack(spacing: 6) {
+                header(large: false, tagged: false)
                 Spacer(minLength: 0)
                 if game.vsEngine {
-                    CoachView(message: game.coachMessage, mood: game.coachMood, avatar: 64)
+                    CoachView(message: game.coachMessage, mood: game.coachMood, avatar: 56)
                         .padding(.horizontal, 14)
                 }
-                PlayerStrip(game: game, color: topColor).padding(.horizontal, 12)
+                PlayerStrip(game: game, color: topColor).padding(.horizontal, 8)
                 BoardView(game: game)
                     .padding(.horizontal, 8)
                     .layoutPriority(1)
-                PlayerStrip(game: game, color: bottomColor).padding(.horizontal, 12)
-                statusRow
+                PlayerStrip(game: game, color: bottomColor).padding(.horizontal, 8)
+                // Whose move it is shows on the strips; say only what they can't.
+                if game.isGameOver || game.board.isInCheck(game.board.turn) { statusRow }
                 Spacer(minLength: 0)
                 controls(large: false)
             }
