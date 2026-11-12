@@ -1,6 +1,5 @@
 // CoachView.swift — LocalChess
-// Yeti coach portraits + speech bubble, echoing the reference layout:
-// avatar left, quip bubble right.
+// Yeti coach portraits + speech bubble: avatar left, quip bubble right.
 
 import SwiftUI
 

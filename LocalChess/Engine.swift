@@ -1,4 +1,4 @@
-// GnuChessEngine.swift — LocalChess
+// Engine.swift — LocalChess
 // Built-in local search engine (alpha-beta + piece-square tables, fully
 // offline), plus an `ArasanAdapter` that drives the real vendored Arasan
 // engine and otherwise falls back to the built-in search. The game never
