@@ -158,9 +158,21 @@ xcodebuild -project LocalChess.xcodeproj -scheme LocalChess \
   -sdk iphonesimulator -configuration Debug CODE_SIGNING_ALLOWED=NO test
 ```
 
-## Signing (your own device)
+## Signing
 
-The project is set up for development sideloading. To run on your iPhone,
-open the project in Xcode and, under Signing & Capabilities, select your
-own Apple Developer team and a unique bundle identifier — no other code
-changes needed. Everything else (engine, art, tests) builds offline.
+The app is published by Artifact: team `TVA9Z8LD95`, bundle identifier
+`com.artifact.localchess` (UI tests: `com.artifact.localchess.uitests`),
+automatic signing. It declares no non-exempt encryption
+(`ITSAppUsesNonExemptEncryption = NO`; there is no networking at all), so
+App Store uploads skip the export-compliance question.
+
+To run it on your own iPhone from another team, override both on the
+command line rather than editing the project:
+
+```sh
+xcodebuild -project LocalChess.xcodeproj -scheme LocalChess \
+  -destination 'id=<device udid>' -allowProvisioningUpdates \
+  DEVELOPMENT_TEAM=<your team> PRODUCT_BUNDLE_IDENTIFIER=<your id> build
+```
+
+Everything else (engine, art, tests) builds offline.
