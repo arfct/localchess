@@ -7,11 +7,12 @@ import SwiftUI
 struct CoachView: View {
     let message: String
     let mood: CoachMood
+    var avatar: CGFloat = 86
 
     var body: some View {
-        HStack(alignment: .top, spacing: 10) {
+        HStack(alignment: .center, spacing: 14) {
             CoachAvatar(mood: mood)
-                .frame(width: 86, height: 86)
+                .frame(width: avatar, height: avatar)
             SpeechBubble(text: message)
             // Absorbs bubble width changes so the row always spans the
             // full width and the avatar never shifts with text length.
@@ -70,7 +71,9 @@ struct SpeechBubble: View {
     let text: String
     var body: some View {
         Text(text)
-            .font(.system(size: 19, weight: .semibold, design: .rounded))
+            .font(.system(size: 17, weight: .semibold, design: .rounded))
+            .lineLimit(3)
+            .minimumScaleFactor(0.85)
             .foregroundColor(.white)
             .padding(.horizontal, 14)
             .padding(.vertical, 12)

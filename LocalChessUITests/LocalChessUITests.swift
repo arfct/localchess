@@ -1,8 +1,9 @@
-// LocalChessUITests.swift — regression tests for tap-to-square mapping.
-// Bug: taps used to land ~1 row off because a board-level DragGesture
-// interpreted touches in the wrong coordinate space. Squares now handle
-// their own taps; these tests tap squares by accessibility id and assert
-// the dots follow the actual tapped square.
+// LocalChessUITests.swift — board input regression tests.
+// The board takes touches through one gesture and maps them to squares with
+// BoardOrientation. These tests tap and drag squares by accessibility id and
+// check what the board does: the right piece selected, moves played by
+// tap-tap and by drag-and-drop, illegal drops undone, promotion asked for.
+// Every launch passes -LCFresh, so a saved game never leaks into a test.
 
 import XCTest
 
@@ -13,6 +14,7 @@ final class LocalChessUITests: XCTestCase {
 
     func testTapSelectsCorrectSquare() throws {
         let app = XCUIApplication()
+        app.launchArguments += ["-LCFresh"]
         app.launch()
         XCTAssertTrue(el(app, "sq-e2").waitForExistence(timeout: 20))
 
@@ -31,6 +33,7 @@ final class LocalChessUITests: XCTestCase {
 
     func testPawnMoveAppliesAndEngineReplies() throws {
         let app = XCUIApplication()
+        app.launchArguments += ["-LCFresh"]
         app.launch()
         XCTAssertTrue(el(app, "sq-e2").waitForExistence(timeout: 20))
 
@@ -52,6 +55,7 @@ final class LocalChessUITests: XCTestCase {
     /// between visuals and tap targets fails loudly.
     func testVisualCenterTapsHitCorrectSquares() throws {
         let app = XCUIApplication()
+        app.launchArguments += ["-LCFresh"]
         app.launch()
         let board = el(app, "board")
         XCTAssertTrue(board.waitForExistence(timeout: 20))
@@ -75,6 +79,7 @@ final class LocalChessUITests: XCTestCase {
     /// Selecting a piece must not move it.
     func testSelectionDoesNotMovePiece() throws {
         let app = XCUIApplication()
+        app.launchArguments += ["-LCFresh"]
         app.launch()
         let board = el(app, "board")
         XCTAssertTrue(board.waitForExistence(timeout: 20))
@@ -89,6 +94,7 @@ final class LocalChessUITests: XCTestCase {
     /// exactly the mate back off, and redo restores without double-counting.
     func testScholarsMateCumulativePoints() throws {
         let app = XCUIApplication()
+        app.launchArguments += ["-LCFresh"]
         app.launch()
         XCTAssertTrue(el(app, "sq-e2").waitForExistence(timeout: 20))
 
@@ -146,6 +152,7 @@ final class LocalChessUITests: XCTestCase {
     /// the asset catalog images resolve at runtime.
     func testYetiCoachPortraitLoads() throws {
         let app = XCUIApplication()
+        app.launchArguments += ["-LCFresh"]
         app.launch()
         XCTAssertTrue(el(app, "coach-yeti-thinking").waitForExistence(timeout: 20))
     }
@@ -155,6 +162,7 @@ final class LocalChessUITests: XCTestCase {
     /// blunder and the replay stepper must scrub the game.
     func testReviewGradesBlunders() throws {
         let app = XCUIApplication()
+        app.launchArguments += ["-LCFresh"]
         app.launch()
         XCTAssertTrue(el(app, "sq-e2").waitForExistence(timeout: 20))
 
@@ -194,6 +202,7 @@ final class LocalChessUITests: XCTestCase {
     /// which these frame + tap assertions catch.
     func testPlayAsBlackPutsBlackAtBottom() throws {
         let app = XCUIApplication()
+        app.launchArguments += ["-LCFresh"]
         app.launch()
         XCTAssertTrue(el(app, "sq-e2").waitForExistence(timeout: 20))
 
@@ -216,5 +225,79 @@ final class LocalChessUITests: XCTestCase {
         board.coordinate(withNormalizedOffset: CGVector(dx: 3.5 / 8.0, dy: 6.5 / 8.0)).tap()
         XCTAssertTrue(el(app, "dot-e6").waitForExistence(timeout: 5))
         XCTAssertTrue(el(app, "dot-e5").exists)
+    }
+
+    // MARK: Drag and drop, promotion
+
+    private func twoPlayer(_ app: XCUIApplication) {
+        el(app, "menu").tap()
+        let toggle = el(app, "vsEngineToggle")
+        XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+        toggle.tap()
+        Thread.sleep(forTimeInterval: 0.5)
+        let v = toggle.value as? String
+        if v != "0" && v != "false" {
+            toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.92, dy: 0.5)).tap()
+            Thread.sleep(forTimeInterval: 0.5)
+        }
+        el(app, "startGame").tap()
+        XCTAssertTrue(app.staticTexts["2 players · local"].waitForExistence(timeout: 5))
+    }
+
+    private func drag(_ app: XCUIApplication, _ from: String, _ to: String) {
+        el(app, from).coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            .press(forDuration: 0.15, thenDragTo: el(app, to).coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)))
+        Thread.sleep(forTimeInterval: 0.6)
+    }
+
+    private func value(_ app: XCUIApplication, _ id: String) -> String {
+        (el(app, id).value as? String) ?? ""
+    }
+
+    /// Dragging a piece to a legal square plays the move; to an illegal one,
+    /// the piece goes back where it was.
+    func testDragAndDrop() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-LCFresh"]
+        app.launch()
+        XCTAssertTrue(el(app, "sq-e2").waitForExistence(timeout: 20))
+        twoPlayer(app)
+
+        drag(app, "sq-g1", "sq-g3")  // not a knight move
+        XCTAssertTrue(value(app, "sq-g1").contains("white knight"), "knight left g1 on an illegal drop")
+        XCTAssertFalse(value(app, "sq-g3").contains("knight"))
+
+        drag(app, "sq-g1", "sq-f3")
+        XCTAssertTrue(value(app, "sq-f3").contains("white knight"), "drag to f3 didn't move the knight")
+        XCTAssertFalse(value(app, "sq-g1").contains("knight"))
+        XCTAssertTrue(app.staticTexts["Black to move"].waitForExistence(timeout: 5))
+
+        drag(app, "sq-e7", "sq-e5")
+        XCTAssertTrue(value(app, "sq-e5").contains("black pawn"))
+        XCTAssertTrue(app.staticTexts["White to move"].waitForExistence(timeout: 5))
+    }
+
+    /// A pawn reaching the last rank asks which piece it becomes, on the board.
+    func testPromotionPicker() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-LCFresh"]
+        app.launch()
+        XCTAssertTrue(el(app, "sq-e2").waitForExistence(timeout: 20))
+        twoPlayer(app)
+
+        // 1.h4 g5 2.hxg5 h6 3.gxh6 Bg7 4.hxg7 Nf6 5.gxh8
+        let moves = [("h2", "h4"), ("g7", "g5"), ("h4", "g5"), ("h7", "h6"), ("g5", "h6"),
+                     ("f8", "g7"), ("h6", "g7"), ("g8", "f6"), ("g7", "h8")]
+        for (from, to) in moves {
+            el(app, "sq-" + from).tap()
+            Thread.sleep(forTimeInterval: 0.2)
+            el(app, "sq-" + to).tap()
+            Thread.sleep(forTimeInterval: 0.35)
+        }
+        XCTAssertTrue(el(app, "promote-knight").waitForExistence(timeout: 5), "no promotion picker")
+        el(app, "promote-knight").tap()
+        Thread.sleep(forTimeInterval: 0.5)
+        XCTAssertTrue(value(app, "sq-h8").contains("white knight"), "h8 is \(value(app, "sq-h8"))")
+        XCTAssertFalse(el(app, "promote-queen").exists)
     }
 }

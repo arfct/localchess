@@ -79,17 +79,53 @@ UIKit fallbacks; no-ops on simulator):
 | Checkmate (win) | escalating celebration pattern + confetti |
 | Checkmate (loss) | long heavy error buzz |
 
+## iPhone Duo
+
+The screen arranges itself for wherever the game is showing
+(`LocalChess/GameLayout.swift`), and never puts the board across the fold:
+
+| Where | Layout |
+|---|---|
+| iPhone, Duo outside display | one column: coach, the yeti's strip, board, your strip, controls |
+| Duo tabletop | the board on the half lying flat, the strips and controls beside it; coach and move list on the raised half |
+| Duo book | the board on one page, coach, strips and move list on the other |
+| Duo open flat, portrait | a big board; with two players, Black's strip and pieces turn to face across the table |
+| Any wide screen | the board as tall as the screen, a panel beside it |
+
+The fold comes from SwiftUI's `reservedRegions(kind: .division)` (iOS
+27.1+). To try the fold layouts without folding a phone, launch with
+`-LCFold tabletop` or `-LCFold book`. The checkmate card stays on one half
+too, in a compact form when that half is short.
+
+## Moving pieces
+
+One gesture over the board handles both ways of moving
+(`LocalChess/BoardView.swift`):
+
+- **Drag:** touch a piece and it lifts; drag it and it follows your finger
+  from where you grabbed it, riding a little above it so your finger
+  doesn't hide it, with the landing square ringed. Drop on a legal square to
+  move, anywhere else and it slides home.
+- **Tap:** tap a piece, then its destination. Tap it again to put it down.
+- **Promotion:** the four choices open on the board from the promotion
+  square; tap outside them to take the move back.
+
+Each side has its own clock (none, 5, 10 or 15 minutes, chosen in the new
+game sheet). Against the yeti only yours runs. Clocks start with the first
+move. The game is saved after every move, so it survives the app closing.
+
 ## Animations
 
 - Pieces slide square-to-square (stable piece IDs + spring animation).
 - Captures pop out with scale + fade; queen captures also fire confetti-grade haptics.
 - Check: pulsing red glow + shake on the king, CHECK! badge.
 - Checkmate: confetti rain + Checkmate! card with mini-board snapshot.
-- Selection bounce, last-move gold tint, legal-move dots.
+- A picked-up piece lifts where it stands; last-move gold tint, legal-move dots.
+- Move list in SAN, captured pieces and material lead for each side.
 
 ## Build & run
 
-Requirements: Xcode 16+, iOS 17 SDK.
+Requirements: Xcode 27+ (iOS 27.1 SDK, for the Duo's fold); runs on iOS 17+.
 
 ```sh
 open LocalChess.xcodeproj
@@ -100,19 +136,22 @@ Headless build:
 
 ```sh
 xcodebuild -project LocalChess.xcodeproj -scheme LocalChess \
-  -sdk iphonesimulator -configuration Debug CODE_SIGNING_ALLOWED=NO build
+  -sdk iphonesimulator -configuration Debug ARCHS=arm64 CODE_SIGNING_ALLOWED=NO build
 ```
 
+(`ARCHS=arm64`: the engine's NEON code doesn't build for Intel simulators.)
+
 Game controls: tap ✕ (top left) for a new game — choose White / Black /
-2-player and yeti strength. Undo/redo buttons sit at the bottom like the
-reference. Timer is 15:00; flagging loses the game. Points: 1/3/3/5/9 per
+2-player, yeti strength and clock. Undo/redo buttons sit at the bottom.
+Flagging loses the game. Points: 1/3/3/5/9 per
 captured pawn/knight/bishop/rook/queen, +2 for giving check, +25 for mate.
 
 ## Tests
 
-UI regression suite (`LocalChessUITests`, 7 tests: tap-to-square mapping,
+UI regression suite (`LocalChessUITests`, 10 tests: tap-to-square mapping,
 visual-center taps, engine reply round trip, cumulative Scholar's-mate
-points with undo/redo, play-as-Black 180° rotation, yeti portrait load):
+points with undo/redo, play-as-Black 180° rotation, yeti portrait load,
+review grading, drag-and-drop with an illegal drop, on-board promotion):
 
 ```sh
 xcodebuild -project LocalChess.xcodeproj -scheme LocalChess \

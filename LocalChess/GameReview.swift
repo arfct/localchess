@@ -177,9 +177,9 @@ struct GameReview {
         var s = ""
         let isCapture = move.isCapture
         if piece.type == .pawn {
-            if isCapture { s += String("abcdefgh"[Square.file(of: move.from)]) }
-            s += Square.name(of: move.to).dropFirst()
-            if isCapture { s.insert("x", at: s.index(s.startIndex, offsetBy: 1)) }
+            // "e4", or "exd5" for a capture.
+            if isCapture { s += String("abcdefgh"[Square.file(of: move.from)]) + "x" }
+            s += Square.name(of: move.to)
             if let promo = move.promotion { s += "=\(promo.sanLetter)" }
         } else {
             s += piece.type.sanLetter

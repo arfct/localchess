@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A1B2C3D4E5F60020 /* LocalChessApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60010 /* LocalChessApp.swift */; };
 		A1B2C3D4E5F60021 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60011 /* ContentView.swift */; };
+		C0FFEE0000000002 /* GameLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FFEE0000000001 /* GameLayout.swift */; };
 		A1B2C3D4E5F60022 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60012 /* BoardView.swift */; };
 		A1B2C3D4E5F60023 /* PieceArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60013 /* PieceArt.swift */; };
 		A1B2C3D4E5F60024 /* CoachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60014 /* CoachView.swift */; };
@@ -99,6 +100,7 @@
 		A1B2C3D4E5F60006 /* LocalChess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocalChess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B2C3D4E5F60010 /* LocalChessApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalChessApp.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60011 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C0FFEE0000000001 /* GameLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLayout.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60012 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60013 /* PieceArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceArt.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60014 /* CoachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachView.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 			children = (
 				A1B2C3D4E5F60010 /* LocalChessApp.swift */,
 				A1B2C3D4E5F60011 /* ContentView.swift */,
+				C0FFEE0000000001 /* GameLayout.swift */,
 				A1B2C3D4E5F60012 /* BoardView.swift */,
 				A1B2C3D4E5F60013 /* PieceArt.swift */,
 				A1B2C3D4E5F60014 /* CoachView.swift */,
@@ -387,6 +390,7 @@
 			files = (
 				A1B2C3D4E5F60020 /* LocalChessApp.swift in Sources */,
 				A1B2C3D4E5F60021 /* ContentView.swift in Sources */,
+				C0FFEE0000000002 /* GameLayout.swift in Sources */,
 				A1B2C3D4E5F60022 /* BoardView.swift in Sources */,
 				A1B2C3D4E5F60023 /* PieceArt.swift in Sources */,
 				A1B2C3D4E5F60024 /* CoachView.swift in Sources */,
@@ -542,8 +546,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = LocalChess;
 				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -581,8 +585,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = LocalChess;
 				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

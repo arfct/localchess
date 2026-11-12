@@ -8,6 +8,15 @@ import Combine
 
 enum PlayerSide { case white, black }
 
+/// How long each side has for the whole game. The clock of the side to move
+/// runs; against the yeti only yours does (it thinks on its own time).
+enum TimeControl: Int, CaseIterable, Identifiable {
+    case untimed = 0, five = 5, ten = 10, fifteen = 15
+    var id: Int { rawValue }
+    var seconds: Int { rawValue * 60 }
+    var title: String { self == .untimed ? "No clock" : "\(rawValue) min" }
+}
+
 @MainActor
 final class GameState: ObservableObject {
     @Published var board = ChessBoard()
@@ -17,7 +26,11 @@ final class GameState: ObservableObject {
     @Published var playerSide: PlayerSide = .white
     @Published var difficulty: EngineDifficulty = .clever
     @Published var engineThinking = false
-    @Published var secondsLeft = 15 * 60
+    @Published var timeControl: TimeControl = .fifteen
+    @Published var whiteSeconds = 15 * 60
+    @Published var blackSeconds = 15 * 60
+    /// The game so far in SAN ("e4", "Nf3", "O-O"), one entry per ply.
+    @Published var sanMoves: [String] = []
     @Published var points = 0
     @Published var coachMessage = "Fresh snow! Come test the Yeti."
     @Published var coachMood: CoachMood = .thinking
@@ -44,6 +57,7 @@ final class GameState: ObservableObject {
     /// the redo counterpart. Mirrors history/redoStack exactly.
     private var uciMoves: [String] = []
     private var redoUci: [String] = []
+    private var redoSan: [String] = []
     private var timer: AnyCancellable?
     private var engineTask: Task<Void, Never>?
     private var reviewTask: Task<Void, Never>?
@@ -59,11 +73,74 @@ final class GameState: ObservableObject {
     /// Board orientation: white at bottom unless the player is black.
     var flipped: Bool { vsEngine ? (playerSide == .black) : false }
 
-    init() { startTimer() }
+    init() {
+        restore()
+        startTimer()
+        maybeEngineMove()
+    }
+
+    // MARK: - Saving
+
+    /// Everything needed to pick a game up where it was left.
+    private struct Saved: Codable {
+        var board: ChessBoard
+        var history: [PositionSnapshot], redoStack: [PositionSnapshot]
+        var historyPoints: [Int], redoPoints: [Int]
+        var uciMoves: [String], redoUci: [String]
+        var sanMoves: [String], redoSan: [String]
+        var playerWhite: Bool, vsEngine: Bool, difficulty: Int, timeControl: Int
+        var whiteSeconds: Int, blackSeconds: Int, points: Int, moveCount: Int
+    }
+
+    private static var saveURL: URL {
+        FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("game.json")
+    }
+
+    /// Writes the game out. Called after every change to it.
+    func save() {
+        let g = Saved(board: board, history: history, redoStack: redoStack,
+                      historyPoints: historyPoints, redoPoints: redoPoints,
+                      uciMoves: uciMoves, redoUci: redoUci, sanMoves: sanMoves, redoSan: redoSan,
+                      playerWhite: playerSide == .white, vsEngine: vsEngine,
+                      difficulty: difficulty.rawValue, timeControl: timeControl.rawValue,
+                      whiteSeconds: whiteSeconds, blackSeconds: blackSeconds,
+                      points: points, moveCount: moveCount)
+        do {
+            try FileManager.default.createDirectory(at: Self.saveURL.deletingLastPathComponent(),
+                                                    withIntermediateDirectories: true)
+            try JSONEncoder().encode(g).write(to: Self.saveURL, options: .atomic)
+        } catch {
+            NSLog("[LocalChess] save failed: %@", "\(error)")
+        }
+    }
+
+    private func restore() {
+        // UI tests start from a fresh board.
+        if ProcessInfo.processInfo.arguments.contains("-LCFresh") { return }
+        guard let data = try? Data(contentsOf: Self.saveURL),
+              let g = try? JSONDecoder().decode(Saved.self, from: data) else { return }
+        board = g.board
+        history = g.history; redoStack = g.redoStack
+        historyPoints = g.historyPoints; redoPoints = g.redoPoints
+        uciMoves = g.uciMoves; redoUci = g.redoUci
+        sanMoves = g.sanMoves; redoSan = g.redoSan
+        playerSide = g.playerWhite ? .white : .black
+        vsEngine = g.vsEngine
+        difficulty = EngineDifficulty(rawValue: g.difficulty) ?? .clever
+        timeControl = TimeControl(rawValue: g.timeControl) ?? .fifteen
+        whiteSeconds = g.whiteSeconds; blackSeconds = g.blackSeconds
+        points = g.points; moveCount = g.moveCount
+        status = board.result()
+        if whiteSeconds == 0 && hasClock(.white) { status = .timeout(winner: .black) }
+        if blackSeconds == 0 && hasClock(.black) { status = .timeout(winner: .white) }
+        if isGameOver { presentGameEnd(status); showMateModal = false }
+    }
 
     // MARK: - Game setup
 
-    func newGame(as side: PlayerSide, vsEngine: Bool = true, difficulty: EngineDifficulty? = nil) {
+    func newGame(as side: PlayerSide, vsEngine: Bool = true, difficulty: EngineDifficulty? = nil,
+                 timeControl: TimeControl? = nil) {
         engineTask?.cancel()
         clearReview()
         board = ChessBoard()
@@ -73,6 +150,8 @@ final class GameState: ObservableObject {
         redoPoints = []
         uciMoves = []
         redoUci = []
+        sanMoves = []
+        redoSan = []
         ArasanAdapter.shared.newGame()
         selected = nil
         legalTargets = []
@@ -81,7 +160,9 @@ final class GameState: ObservableObject {
         self.vsEngine = vsEngine
         if let d = difficulty { self.difficulty = d }
         engineThinking = false
-        secondsLeft = 15 * 60
+        if let t = timeControl { self.timeControl = t }
+        whiteSeconds = self.timeControl.seconds
+        blackSeconds = self.timeControl.seconds
         points = 0
         moveCount = 0
         showMateModal = false
@@ -90,6 +171,7 @@ final class GameState: ObservableObject {
         coachMessage = CoachLines.opening.randomElement() ?? "Fresh snow! Come test the Yeti."
         coachMood = .thinking
         HapticManager.shared.gameStart()
+        save()
         maybeEngineMove()
     }
 
@@ -104,52 +186,115 @@ final class GameState: ObservableObject {
             }
     }
 
+    /// Whether this side plays against a clock at all.
+    func hasClock(_ color: PieceColor) -> Bool {
+        timeControl != .untimed && (!vsEngine || color == playerColor)
+    }
+
+    /// The clock that's running now, if any. Clocks start with the first
+    /// move, so nobody loses time reading the menu.
+    var runningClock: PieceColor? {
+        guard !isGameOver, moveCount > 0, hasClock(board.turn) else { return nil }
+        return board.turn
+    }
+
+    func seconds(_ color: PieceColor) -> Int {
+        color == .white ? whiteSeconds : blackSeconds
+    }
+
+    func clockText(_ color: PieceColor) -> String {
+        let s = seconds(color)
+        return String(format: "%d:%02d", s / 60, s % 60)
+    }
+
     private func tick() {
-        guard !isGameOver else { return }
-        if secondsLeft > 0 {
-            secondsLeft -= 1
-            if secondsLeft == 0 {
-                // Flag fall: the side to move loses on time.
-                let winner = board.turn.opposite
-                status = .timeout(winner: winner)
-                onGameEnd(status)
-            }
+        guard let side = runningClock, seconds(side) > 0 else { return }
+        if side == .white { whiteSeconds -= 1 } else { blackSeconds -= 1 }
+        if seconds(side) % 5 == 0 { save() }
+        if seconds(side) == 0 {
+            // Flag fall: the side to move loses on time.
+            status = .timeout(winner: side.opposite)
+            onGameEnd(status)
         }
     }
 
-    var clockText: String {
-        String(format: "%02d:%02d", secondsLeft / 60, secondsLeft % 60)
+    /// Pieces each side has taken, worst first, and the material lead
+    /// (in pawns) of `color` over the other side.
+    func captured(by color: PieceColor) -> [PieceType] {
+        let start: [PieceType: Int] = [.pawn: 8, .knight: 2, .bishop: 2, .rook: 2, .queen: 1]
+        var left: [PieceType: Int] = [:]
+        for p in board.squares.compactMap({ $0 }) where p.color == color.opposite {
+            left[p.type, default: 0] += 1
+        }
+        var out: [PieceType] = []
+        for t in [PieceType.pawn, .knight, .bishop, .rook, .queen] {
+            out += Array(repeating: t, count: max(0, start[t]! - left[t, default: 0]))
+        }
+        return out
+    }
+
+    func materialLead(_ color: PieceColor) -> Int {
+        var n = 0
+        for p in board.squares.compactMap({ $0 }) where p.type != .king {
+            n += (p.color == color ? 1 : -1) * p.type.points
+        }
+        return n
     }
 
     // MARK: - Selection & moves
 
-    /// Square tapped in display coordinates (already orientation-adjusted by caller).
-    func tap(square: Int) {
-        guard !isGameOver, !engineThinking else { return }
-        if vsEngine && board.turn != playerColor { return }
+    /// Whether a person may touch the board now.
+    var canInteract: Bool {
+        !isGameOver && !engineThinking && pendingPromotion == nil
+            && (!vsEngine || board.turn == playerColor)
+    }
 
-        // If a piece is selected and this is one of its targets, move there.
-        if let sel = selected,
-           let mv = legalTargets.first(where: { $0.from == sel && $0.to == square }) {
-            if mv.promotion != nil {
-                // Human promotion: ask which piece (default queen in the sheet).
-                pendingPromotion = mv
-                return
-            }
-            doMove(mv)
-            return
+    /// Whether the piece on `square` can be picked up.
+    func canPickUp(_ square: Int) -> Bool {
+        canInteract && board.squares[square]?.color == board.turn
+    }
+
+    func select(_ square: Int) {
+        guard canPickUp(square) else { return }
+        if selected == square { return }
+        selected = square
+        legalTargets = board.legalMoves(for: board.turn).filter { $0.from == square }
+        HapticManager.shared.select()
+    }
+
+    func deselect() {
+        selected = nil
+        legalTargets = []
+    }
+
+    /// Plays from → to if it's legal (asking for the piece on a promotion).
+    /// Returns false, leaving everything as it was, if it isn't.
+    @discardableResult
+    func move(from: Int, to: Int) -> Bool {
+        guard canInteract,
+              let mv = board.legalMoves(for: board.turn).first(where: { $0.from == from && $0.to == to })
+        else { return false }
+        if mv.promotion != nil {
+            selected = from
+            pendingPromotion = mv
+            return true
         }
+        doMove(mv)
+        return true
+    }
 
-        // Otherwise (re)select own piece.
-        if let p = board.squares[square], p.color == board.turn {
-            if vsEngine && p.color != playerColor { return }
-            selected = square
-            legalTargets = board.legalMoves(for: board.turn).filter { $0.from == square }
-            HapticManager.shared.select()
+    /// A tap on a square: move the selected piece there, pick up the piece
+    /// there, or put the selection down.
+    func tap(square: Int) {
+        guard canInteract else { return }
+        if let sel = selected, sel != square, move(from: sel, to: square) { return }
+        if selected == square {
+            deselect()
+        } else if canPickUp(square) {
+            select(square)
         } else {
             if selected != nil { HapticManager.shared.illegal() }
-            selected = nil
-            legalTargets = []
+            deselect()
         }
     }
 
@@ -158,6 +303,11 @@ final class GameState: ObservableObject {
         mv.promotion = type
         pendingPromotion = nil
         doMove(mv)
+    }
+
+    func cancelPromotion() {
+        pendingPromotion = nil
+        deselect()
     }
 
     func doMove(_ move: ChessMove) {
@@ -172,6 +322,8 @@ final class GameState: ObservableObject {
         redoPoints = []
         uciMoves.append(move.uci)
         redoUci = []
+        sanMoves.append(GameReview.sanString(for: move, on: board, legal: board.legalMoves(for: board.turn)))
+        redoSan = []
 
         let mover = board.turn
         let wasCapture = move.isCapture
@@ -227,6 +379,7 @@ final class GameState: ObservableObject {
             status = result
             onGameEnd(result)
         }
+        save()
     }
 
     // MARK: - Engine
@@ -317,6 +470,7 @@ final class GameState: ObservableObject {
         engineTask?.cancel()
         clearReview()
         engineThinking = false
+        pendingPromotion = nil
         // Against the engine, revert a full round (engine + player) when possible.
         let steps = (vsEngine && history.count >= 2 && board.turn == playerColor) ? 2 : 1
         for _ in 0..<steps {
@@ -324,7 +478,8 @@ final class GameState: ObservableObject {
             redoStack.append(board.snapshot())
             redoPoints.append(points)
             if !uciMoves.isEmpty { redoUci.append(uciMoves.removeLast()) }
-            board.restore(prev)
+            if !sanMoves.isEmpty { redoSan.append(sanMoves.removeLast()) }
+            withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) { board.restore(prev) }
             points = pp
             moveCount = max(0, moveCount - 1)
         }
@@ -334,6 +489,7 @@ final class GameState: ObservableObject {
         showMateModal = false
         mateWon = nil
         HapticManager.shared.select()
+        save()
     }
 
     func redo() {
@@ -345,7 +501,8 @@ final class GameState: ObservableObject {
             history.append(board.snapshot())
             historyPoints.append(points)
             if !redoUci.isEmpty { uciMoves.append(redoUci.removeLast()) }
-            board.restore(next)
+            if !redoSan.isEmpty { sanMoves.append(redoSan.removeLast()) }
+            withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) { board.restore(next) }
             points = rp
             moveCount += 1
         }
@@ -355,6 +512,7 @@ final class GameState: ObservableObject {
         HapticManager.shared.select()
         if case .ongoing = status { maybeEngineMove() }
         else { presentGameEnd(status) }
+        save()
     }
 
     // MARK: - Game end
