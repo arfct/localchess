@@ -1,6 +1,7 @@
 ---
 title: LocalChess
 date: 2026-09
+status: wip
 category: product
 tags: [ios, game]
 url: https://github.com/arfct/localchess
@@ -14,7 +15,7 @@ media:
     caption: Six moves into a game against the yeti at its Clever strength, with Black's last move tinted gold and the score at minus three
     alt: A phone screen with a dark chessboard in mid-game under a yeti portrait and a speech bubble reading Fresh snow! Come test the Yeti, a red pill reading -3 points, a green clock at 14:05 and a New Game button
 credits: [dps]
-unconfirmed: [date, credits]
+unconfirmed: [date, status]
 ---
 
 On a partly folded iPhone Duo, LocalChess keeps its board to one side of the fold. In the arrangement its code calls tabletop the board is on the half lying flat, with the coach and the move list on the raised half; in the one called book the board takes one page and the rest takes the other. Opened flat with two people playing, Black's strip and pieces turn to face across the table.
